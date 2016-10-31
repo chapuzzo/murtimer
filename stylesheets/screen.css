@@ -108,7 +108,7 @@ body {
 }
 
 /* line 36, ../scss/_index.scss */
-.table .caption, .table.options .row .td, .table.timetable .th, .table.timetable .td {
+.table .caption, .table.options .row .cell, .table.timetable .th, .table.timetable .cell {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,13 +146,13 @@ body {
   height: 80%;
 }
 /* line 73, ../scss/_index.scss */
-.table.options .row .td {
+.table.options .row .cell {
   flex: 1 1 0;
   height: 100%;
   cursor: pointer;
 }
 /* line 77, ../scss/_index.scss */
-.table.options .row .td.selected {
+.table.options .row .cell.selected {
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
 }
 
@@ -161,7 +161,7 @@ body {
   height: 40%;
 }
 /* line 88, ../scss/_index.scss */
-.table.timetable .th, .table.timetable .td {
+.table.timetable .th, .table.timetable .cell {
   width: 12.5%;
   height: 100%;
 }
@@ -182,28 +182,28 @@ body {
   height: 50%;
 }
 /* line 112, ../scss/_index.scss */
-.table.timetable .table, .table.timetable .th, .table.timetable .td {
+.table.timetable .table, .table.timetable .th, .table.timetable .cell {
   border: 1px black solid;
 }
 /* line 116, ../scss/_index.scss */
-.table.timetable .td {
+.table.timetable .cell {
   cursor: pointer;
   border: 1px grey solid;
 }
 
 /* line 123, ../scss/_index.scss */
-.table .td[data-state='cant'] {
+.table .cell[data-state='cant'] {
   background-color: tomato;
 }
 /* line 127, ../scss/_index.scss */
-.table .td[data-state='dontwant'] {
+.table .cell[data-state='dontwant'] {
   background-color: #FFA600;
 }
 /* line 131, ../scss/_index.scss */
-.table .td[data-state='can'] {
+.table .cell[data-state='can'] {
   background-color: yellowgreen;
 }
 /* line 135, ../scss/_index.scss */
-.table .td[data-state='want'] {
+.table .cell[data-state='want'] {
   background-color: greenyellow;
 }

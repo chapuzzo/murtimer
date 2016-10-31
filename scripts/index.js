@@ -21,7 +21,7 @@ var StateSetter = function(){
 var stateSetter = StateSetter()
 
 var selectOption = function(event){
-  var options = document.querySelectorAll('.options .td')
+  var options = document.querySelectorAll('.options .cell')
   Array.prototype.forEach.call(options, function(option){
     option.classList.remove('selected')
   })
@@ -40,13 +40,13 @@ var toggle = function(event){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-  var cells = document.querySelectorAll('.timetable .td')
+  var cells = document.querySelectorAll('.timetable .cell')
   Array.prototype.forEach.call(cells, function(cell){
     cell.addEventListener('touchstart', toggle, false)
     cell.addEventListener('click', toggle, false)
   })
 
-  var options = document.querySelectorAll('.options .td')
+  var options = document.querySelectorAll('.options .cell')
   Array.prototype.forEach.call(options, function(cell){
     cell.addEventListener('touchstart', selectOption, false)
     cell.addEventListener('click', selectOption, false)

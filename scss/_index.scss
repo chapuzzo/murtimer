@@ -70,7 +70,7 @@ body {
   }
   .row {
     height: 80%;
-    .td {
+    .cell {
       flex: 1 1 0;
       height: 100%;
       @extend %centered_content;
@@ -91,7 +91,7 @@ body {
     height: 100%;
   }
 
-  .th, .td {
+  .th, .cell {
     @extend %cell;
   }
 
@@ -109,30 +109,30 @@ body {
     }
   }
 
-  .table, .th, .td {
+  .table, .th, .cell {
     border: 1px black solid;
   }
 
-  .td {
+  .cell {
     cursor: pointer;
     border: 1px grey solid;
   }
 
 }
 .table {
-  .td[data-state='cant'] {
+  .cell[data-state='cant'] {
   	background-color: tomato;
   }
 
-  .td[data-state='dontwant'] {
+  .cell[data-state='dontwant'] {
   	background-color: #FFA600;
   }
 
-  .td[data-state='can'] {
+  .cell[data-state='can'] {
     background-color: yellowgreen;
   }
 
-  .td[data-state='want'] {
+  .cell[data-state='want'] {
     background-color: greenyellow;
   }
 }
