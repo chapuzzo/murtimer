@@ -67,12 +67,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 1, ../sass/_index.scss */
+/* line 1, ../scss/_index.scss */
 * {
   box-sizing: border-box;
 }
 
-/* line 5, ../sass/_index.scss */
+/* line 5, ../scss/_index.scss */
 html {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -82,14 +82,14 @@ html {
   user-select: none;
   font-size: 100%;
 }
-
 @media only screen and (max-device-width: 480px) {
-  /* line 16, ../sass/_index.scss */
+  /* line 5, ../scss/_index.scss */
   html {
     font-size: 80%;
   }
 }
-/* line 19, ../sass/_index.scss */
+
+/* line 20, ../scss/_index.scss */
 html, body {
   width: 100%;
   height: 100%;
@@ -102,25 +102,25 @@ html, body {
   font-family: monospace;
 }
 
-/* line 31, ../sass/_index.scss */
+/* line 32, ../scss/_index.scss */
 body {
   font: 100% / 1.2;
 }
 
-/* line 35, ../sass/_index.scss */
+/* line 36, ../scss/_index.scss */
 .table .caption, .table.options .row .td, .table.timetable .th, .table.timetable .td {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* line 41, ../sass/_index.scss */
+/* line 42, ../scss/_index.scss */
 .table {
   width: 80%;
   margin: auto;
   text-align: center;
 }
-/* line 46, ../sass/_index.scss */
+/* line 47, ../scss/_index.scss */
 .table .row {
   width: 100%;
   display: flex;
@@ -128,79 +128,82 @@ body {
   align-items: center;
   justify-content: space-between;
 }
-/* line 54, ../sass/_index.scss */
+/* line 55, ../scss/_index.scss */
 .table .caption {
   height: 10%;
 }
 
-/* line 64, ../sass/_index.scss */
+/* line 65, ../scss/_index.scss */
 .table.options {
   height: 15%;
 }
-/* line 66, ../sass/_index.scss */
+/* line 68, ../scss/_index.scss */
 .table.options .caption {
   height: 20%;
 }
-/* line 69, ../sass/_index.scss */
+/* line 71, ../scss/_index.scss */
 .table.options .row {
   height: 80%;
 }
-/* line 71, ../sass/_index.scss */
+/* line 73, ../scss/_index.scss */
 .table.options .row .td {
   flex: 1 1 0;
   height: 100%;
+  cursor: pointer;
+}
+/* line 77, ../scss/_index.scss */
+.table.options .row .td.selected {
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
 }
 
-/* line 79, ../sass/_index.scss */
+/* line 85, ../scss/_index.scss */
 .table.timetable {
   height: 40%;
 }
-/* line 82, ../sass/_index.scss */
+/* line 88, ../scss/_index.scss */
 .table.timetable .th, .table.timetable .td {
   width: 12.5%;
   height: 100%;
 }
-/* line 92, ../sass/_index.scss */
+/* line 98, ../scss/_index.scss */
 .table.timetable .header {
   height: 30%;
 }
-/* line 94, ../sass/_index.scss */
+/* line 100, ../scss/_index.scss */
 .table.timetable .header .row {
   height: 100%;
 }
-/* line 99, ../sass/_index.scss */
+/* line 105, ../scss/_index.scss */
 .table.timetable .body {
   height: 60%;
 }
-/* line 101, ../sass/_index.scss */
+/* line 107, ../scss/_index.scss */
 .table.timetable .body .row {
   height: 50%;
 }
-/* line 106, ../sass/_index.scss */
+/* line 112, ../scss/_index.scss */
 .table.timetable .table, .table.timetable .th, .table.timetable .td {
   border: 1px black solid;
 }
-/* line 110, ../sass/_index.scss */
+/* line 116, ../scss/_index.scss */
 .table.timetable .td {
+  cursor: pointer;
   border: 1px grey solid;
 }
 
-/* line 116, ../sass/_index.scss */
-.td.cant {
+/* line 123, ../scss/_index.scss */
+.table .td[data-state='cant'] {
   background-color: tomato;
 }
-
-/* line 120, ../sass/_index.scss */
-.td.dontwant {
+/* line 127, ../scss/_index.scss */
+.table .td[data-state='dontwant'] {
   background-color: #FFA600;
 }
-
-/* line 124, ../sass/_index.scss */
-.td.can {
+/* line 131, ../scss/_index.scss */
+.table .td[data-state='can'] {
   background-color: yellowgreen;
 }
-
-/* line 128, ../sass/_index.scss */
-.td.want {
+/* line 135, ../scss/_index.scss */
+.table .td[data-state='want'] {
   background-color: greenyellow;
 }

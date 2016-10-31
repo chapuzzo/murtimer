@@ -10,11 +10,12 @@ html {
   -ms-user-select: none;
   user-select: none;
   font-size: 100%;
+
+  @media only screen and (max-device-width: 480px) {
+    font-size: 80%;
+  }
 }
 
-@media only screen and (max-device-width: 480px) {
-  html { font-size: 80%; }
-}
 
 html, body {
   width: 100%;
@@ -63,6 +64,7 @@ body {
 
 .table.options {
   height: 15%;
+
   .caption {
     height: 20%;
   }
@@ -72,6 +74,10 @@ body {
       flex: 1 1 0;
       height: 100%;
       @extend %centered_content;
+      &.selected {
+        box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
+      }
+      cursor: pointer;
     }
   }
 }
@@ -108,23 +114,26 @@ body {
   }
 
   .td {
+    cursor: pointer;
     border: 1px grey solid;
   }
 
 }
+.table {
+  .td[data-state='cant'] {
+  	background-color: tomato;
+  }
 
-.td.cant {
-	background-color: tomato;
+  .td[data-state='dontwant'] {
+  	background-color: #FFA600;
+  }
+
+  .td[data-state='can'] {
+    background-color: yellowgreen;
+  }
+
+  .td[data-state='want'] {
+    background-color: greenyellow;
+  }
 }
 
-.td.dontwant {
-	background-color: #FFA600;
-}
-
-.td.can {
-  background-color: yellowgreen;
-}
-
-.td.want {
-  background-color: greenyellow;
-}
