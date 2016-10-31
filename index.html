@@ -1,158 +1,65 @@
 <!doctype html>
 <html>
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="stylesheets/screen.css">
+
 	<title>Murtimer</title>
 </head>
 <body>
 
-<table class="timetable">
-	<caption> Setmana que vé </caption>
-	<thead>
-		<tr>
-			<th>dia<br>\<br>hora</th>
-			<th>DL</th>
-			<th>DM</th>
-			<th>DC</th>
-			<th>DJ</th>
-			<th>DV</th>
-			<th>DS</th>
-			<th>DG</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th>matí</th>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<th>nit</th>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</tbody>
-</table>
+	<div class="table timetable">
+		<div class="caption">Setmana que ve</div>
+		<div class="header">
+			<div class="row">
+				<div class="th">dia<br>\<br>hora</div>
+				<div class="th">DL</div>
+				<div class="th">DM</div>
+				<div class="th">DC</div>
+				<div class="th">DJ</div>
+				<div class="th"><span>DV</span></div>
+				<div class="th"><span>DS</span></div>
+				<div class="th"><span>DG</span></div>
+			</div>
+		</div>
+		<div class="body">
+			<div class="row">
+				<div class="th"><span>matí</span></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+			</div>
+			<div class="row">
+				<div class="th"><span>nit</span></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+				<div class="td"></div>
+			</div>
+		</div>
+	</div>
 
-<table class="options">
-	<caption>opcions</caption>
-	<tr>
-		<td class="cant">no puc</td>
-		<td class="dontwant">no vull</td>
-		<td class="can">puc</td>
-		<td class="want">vull</td>
-	</tr>
-</table>
+	<div class="table options">
+		<div class="caption">opcions</div>
+		<div class="row">
+			<div class="td cant">no puc</div>
+			<div class="td dontwant">no vull</div>
+			<div class="td can">puc</div>
+			<div class="td want">vull</div>
+		</div>
+	</div>
 
-<style type="text/css">
-	* {
-		box-sizing: border-box;
-		font-family: monospace;
-	}
-
-	html {
-		-webkit-touch-callout: none;
-		-webkit-user-select: none;
-		-khtml-user-select: none;
-		-moz-user-select: none;
-		-ms-user-select: none;
-		user-select: none;
-	}
-
-	html, body {
-		width: 100%;
-		height: 100%;
-		margin: 0;
-		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-around;
-	}
-
-	table {
-		table-layout: fixed;
-		width: 80%;
-		margin: auto;
-		text-align: center;
-	}
-
-	table.timetable {
-		height: 40%;
-		background-color: black
-	}
-
-	table.options {
-		height: 20%;
-	}
-
-	thead {
-		height: 10%;
-	}
-
-	caption {
-		padding-bottom: 5%;
-	}
-
-	th, td, tr, thead, tbody, table {
-		border-spacing: 2px;
-		border-collapse: separate;
-	}
-
-	th, td {
-		width: 12.5%;
-		background-color: white
-	}
-
-	td {
-		border: 1px black dotted;
-	}
-
-	td.cant {
-		background-color: tomato;
-	}
-
-	td.dontwant {
-		background-color: #FFA600FF;
-	}
-
-	td.can {
-		background-color: #8CFF00FF;
-	}
-
-	td.want {
-		background-color: #00FF9FFF;
-	}
-</style>
-
-<script type="text/javascript">
-	var toggle = function(event){
-		event.preventDefault()
-		event.target.classList.toggle('can')
-	}
-
-	document.addEventListener('DOMContentLoaded', function(){
-		var cells = document.querySelectorAll('td')
-		console.log(cells)
-		Array.prototype.forEach.call(cells, function(cell){
-			cell.addEventListener('touchstart', toggle, false)
-			cell.addEventListener('click', toggle, false)
-		})
-	})
-</script>
+	<script type="text/javascript" src="scripts/index.js"></script>
 
 </body>
 </html>

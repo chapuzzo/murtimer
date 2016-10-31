@@ -1,0 +1,206 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 5, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+/* line 22, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1;
+}
+
+/* line 24, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 26, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 28, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+/* line 30, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none;
+}
+/* line 103, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+/* line 32, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none;
+}
+
+/* line 116, ../../../../.rvm/gems/ruby-2.3.1@murtimer/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block;
+}
+
+/* line 1, ../sass/_index.scss */
+* {
+  box-sizing: border-box;
+}
+
+/* line 5, ../sass/_index.scss */
+html {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 100%;
+}
+
+@media only screen and (max-device-width: 480px) {
+  /* line 16, ../sass/_index.scss */
+  html {
+    font-size: 80%;
+  }
+}
+/* line 19, ../sass/_index.scss */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  font-family: monospace;
+}
+
+/* line 31, ../sass/_index.scss */
+body {
+  font: 100% / 1.2;
+}
+
+/* line 35, ../sass/_index.scss */
+.table .caption, .table.options .row .td, .table.timetable .th, .table.timetable .td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* line 41, ../sass/_index.scss */
+.table {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+/* line 46, ../sass/_index.scss */
+.table .row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+/* line 54, ../sass/_index.scss */
+.table .caption {
+  height: 10%;
+}
+
+/* line 64, ../sass/_index.scss */
+.table.options {
+  height: 15%;
+}
+/* line 66, ../sass/_index.scss */
+.table.options .caption {
+  height: 20%;
+}
+/* line 69, ../sass/_index.scss */
+.table.options .row {
+  height: 80%;
+}
+/* line 71, ../sass/_index.scss */
+.table.options .row .td {
+  flex: 1 1 0;
+  height: 100%;
+}
+
+/* line 79, ../sass/_index.scss */
+.table.timetable {
+  height: 40%;
+}
+/* line 82, ../sass/_index.scss */
+.table.timetable .th, .table.timetable .td {
+  width: 12.5%;
+  height: 100%;
+}
+/* line 92, ../sass/_index.scss */
+.table.timetable .header {
+  height: 30%;
+}
+/* line 94, ../sass/_index.scss */
+.table.timetable .header .row {
+  height: 100%;
+}
+/* line 99, ../sass/_index.scss */
+.table.timetable .body {
+  height: 60%;
+}
+/* line 101, ../sass/_index.scss */
+.table.timetable .body .row {
+  height: 50%;
+}
+/* line 106, ../sass/_index.scss */
+.table.timetable .table, .table.timetable .th, .table.timetable .td {
+  border: 1px black solid;
+}
+/* line 110, ../sass/_index.scss */
+.table.timetable .td {
+  border: 1px grey solid;
+}
+
+/* line 116, ../sass/_index.scss */
+.td.cant {
+  background-color: tomato;
+}
+
+/* line 120, ../sass/_index.scss */
+.td.dontwant {
+  background-color: #FFA600;
+}
+
+/* line 124, ../sass/_index.scss */
+.td.can {
+  background-color: yellowgreen;
+}
+
+/* line 128, ../sass/_index.scss */
+.td.want {
+  background-color: greenyellow;
+}
