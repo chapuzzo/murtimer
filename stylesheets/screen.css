@@ -96,7 +96,7 @@ html, body {
   margin: 0;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   align-items: center;
   justify-content: space-around;
   font-family: monospace;
@@ -108,102 +108,92 @@ body {
 }
 
 /* line 36, ../scss/_index.scss */
-.table .caption, .table.options .row .cell, .table.timetable .th, .table.timetable .cell {
+.table .caption, .table .row .cell, .table .row .th {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
 }
 
-/* line 42, ../scss/_index.scss */
+/* line 43, ../scss/_index.scss */
+.table, .table .header, .table .body {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+/* line 49, ../scss/_index.scss */
 .table {
   width: 80%;
   margin: auto;
-  text-align: center;
 }
-/* line 47, ../scss/_index.scss */
+/* line 54, ../scss/_index.scss */
+.table .caption {
+  flex: 1 1 0;
+}
+/* line 59, ../scss/_index.scss */
+.table .header, .table .body {
+  flex: 1 1 0;
+}
+/* line 64, ../scss/_index.scss */
 .table .row {
-  width: 100%;
+  flex: 1 1 0;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-flow: row;
   justify-content: space-between;
 }
-/* line 55, ../scss/_index.scss */
-.table .caption {
-  height: 10%;
+/* line 70, ../scss/_index.scss */
+.table .row .cell, .table .row .th {
+  flex: 1 1 0;
+}
+/* line 75, ../scss/_index.scss */
+.table .row .cell {
+  cursor: pointer;
 }
 
-/* line 65, ../scss/_index.scss */
+/* line 81, ../scss/_index.scss */
 .table.options {
   height: 15%;
 }
-/* line 68, ../scss/_index.scss */
-.table.options .caption {
-  height: 20%;
+/* line 84, ../scss/_index.scss */
+.table.options .body {
+  flex: 4 4 0;
 }
-/* line 71, ../scss/_index.scss */
-.table.options .row {
-  height: 80%;
-}
-/* line 73, ../scss/_index.scss */
-.table.options .row .cell {
-  flex: 1 1 0;
-  height: 100%;
-  cursor: pointer;
-}
-/* line 77, ../scss/_index.scss */
-.table.options .row .cell.selected {
+/* line 88, ../scss/_index.scss */
+.table.options .body .cell.selected {
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
 }
 
-/* line 85, ../scss/_index.scss */
+/* line 95, ../scss/_index.scss */
 .table.timetable {
   height: 40%;
 }
-/* line 88, ../scss/_index.scss */
-.table.timetable .th, .table.timetable .cell {
-  width: 12.5%;
-  height: 100%;
-}
 /* line 98, ../scss/_index.scss */
-.table.timetable .header {
-  height: 30%;
-}
-/* line 100, ../scss/_index.scss */
-.table.timetable .header .row {
-  height: 100%;
-}
-/* line 105, ../scss/_index.scss */
 .table.timetable .body {
-  height: 60%;
+  flex: 2 2 0;
 }
-/* line 107, ../scss/_index.scss */
-.table.timetable .body .row {
-  height: 50%;
-}
-/* line 112, ../scss/_index.scss */
+/* line 102, ../scss/_index.scss */
 .table.timetable .table, .table.timetable .th, .table.timetable .cell {
   border: 1px black solid;
 }
-/* line 116, ../scss/_index.scss */
+/* line 106, ../scss/_index.scss */
 .table.timetable .cell {
-  cursor: pointer;
   border: 1px grey solid;
 }
 
-/* line 123, ../scss/_index.scss */
+/* line 112, ../scss/_index.scss */
 .table .cell[data-state='cant'] {
   background-color: tomato;
 }
-/* line 127, ../scss/_index.scss */
+/* line 116, ../scss/_index.scss */
 .table .cell[data-state='dontwant'] {
   background-color: #FFA600;
 }
-/* line 131, ../scss/_index.scss */
+/* line 120, ../scss/_index.scss */
 .table .cell[data-state='can'] {
   background-color: yellowgreen;
 }
-/* line 135, ../scss/_index.scss */
+/* line 124, ../scss/_index.scss */
 .table .cell[data-state='want'] {
   background-color: greenyellow;
 }

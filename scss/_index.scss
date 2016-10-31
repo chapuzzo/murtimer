@@ -23,7 +23,7 @@ html, body {
   margin: 0;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-flow: column;
   align-items: center;
   justify-content: space-around;
   font-family: monospace;
@@ -37,47 +37,57 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-flow: column;
+}
+
+%column {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 }
 
 .table {
   width: 80%;
   margin: auto;
-  text-align: center;
-
-  %row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
+  @extend %column;
 
   .caption {
     @extend %centered_content;
-    height: 10%;
+    flex: 1 1 0;
+  }
+
+  .header, .body {
+    flex: 1 1 0;
+    @extend %column;
   }
 
   .row {
-    @extend %row;
+    flex: 1 1 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+
+    .cell, .th {
+      @extend %centered_content;
+      flex: 1 1 0;
+    }
+
+    .cell {
+      cursor: pointer;
+    }
   }
 }
 
 .table.options {
   height: 15%;
 
-  .caption {
-    height: 20%;
-  }
-  .row {
-    height: 80%;
+  .body {
+    flex: 4 4 0;
+
     .cell {
-      flex: 1 1 0;
-      height: 100%;
-      @extend %centered_content;
       &.selected {
         box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
       }
-      cursor: pointer;
     }
   }
 }
@@ -85,28 +95,8 @@ body {
 .table.timetable {
   height: 40%;
 
-  %cell {
-    @extend %centered_content;
-    width: 12.5%;
-    height: 100%;
-  }
-
-  .th, .cell {
-    @extend %cell;
-  }
-
-  .header {
-    height: 30%;
-    .row {
-      height: 100%;
-    }
-  }
-
   .body {
-    height: 60%;
-    .row {
-      height: 50%;
-    }
+    flex: 2 2 0;
   }
 
   .table, .th, .cell {
@@ -114,11 +104,10 @@ body {
   }
 
   .cell {
-    cursor: pointer;
     border: 1px grey solid;
   }
-
 }
+
 .table {
   .cell[data-state='cant'] {
   	background-color: tomato;
