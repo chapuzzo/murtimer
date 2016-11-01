@@ -11,7 +11,7 @@ var allowedPriorities = {
 var selections = {}
 
 var Priority = function(priorities){
-  var current = ''
+  var current = 'want'
 
   return {
     select: function(name){
@@ -28,38 +28,47 @@ var Priority = function(priorities){
 
 var priority = Priority(allowedPriorities)
 
-var selectPriority = function(event){
-  event.preventDefault()
-
-  var options = document.querySelectorAll('.priorities .cell')
-  Array.prototype.forEach.call(options, function(option){
-    option.classList.remove('selected')
+var drawPriorities = function(){
+  var priorityElements = document.querySelectorAll('.priorities .cell')
+  Array.prototype.forEach.call(priorityElements, function(priorityElement){
+    priorityElement.classList.remove('selected')
   })
 
-  this.classList.add('selected')
+  var currentPriorityQuery = '.priorities [data-priority="' + priority.selected() +'"]'
+  var currentPriorityElement = document.querySelector(currentPriorityQuery)
+  currentPriorityElement.classList.add('selected')
 
-  var selectedPriority = this.dataset.priority
-  priority.select(selectedPriority)
-}
-
-var drawSelections = function(selections){
-  var cells = document.querySelectorAll('.timetable .cell')
-  Array.prototype.forEach.call(cells, function(cell){
-    cell.dataset.priority = ''
-  })
-
-  _.forEach(selections, function(selections, priority){
-    _.forEach(selections, function(selection){
-      var currentSlot = '.cell[data-day="'+selection.day+'"][data-duty="'+selection.duty+'"]'
-      document.querySelector(currentSlot).dataset.priority = priority
-    })
-  })
 
   _.forEach(allowedPriorities, function(max, priority){
     var currentPriorityQuery = '.priorities [data-priority="' + priority +'"] .count'
     var element = document.querySelector(currentPriorityQuery)
     element.innerHTML = max - (selections[priority] || []).length
   })
+}
+
+var selectPriority = function(event){
+  event.preventDefault()
+
+  var selectedPriority = this.dataset.priority
+  priority.select(selectedPriority)
+
+  drawPriorities()
+}
+
+var drawSelections = function(selections){
+  var cellElements = document.querySelectorAll('.timetable .cell')
+  Array.prototype.forEach.call(cellElements, function(cellElement){
+    cellElement.dataset.priority = ''
+  })
+
+  _.forEach(selections, function(selections, priority){
+    _.forEach(selections, function(selection){
+      var currentSlotQuery = '.cell[data-day="'+selection.day+'"][data-duty="'+selection.duty+'"]'
+      document.querySelector(currentSlotQuery).dataset.priority = priority
+    })
+  })
+
+  drawPriorities()
 }
 
 drawSelections([])
