@@ -30,7 +30,7 @@ html, body {
 }
 
 body {
-  font: 100% / 1.2;
+  font: 100% / 1.5;
 }
 
 %centered_content {
@@ -78,13 +78,14 @@ body {
   }
 }
 
-.table.options {
+.table.priorities {
   height: 15%;
 
   .body {
     flex: 4 4 0;
 
     .cell {
+      justify-content: space-around;
       &.selected {
         box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
       }
@@ -109,19 +110,19 @@ body {
 }
 
 .table {
-  .cell[data-state='cant'] {
+  .cell[data-priority='cant'] {
   	background-color: tomato;
   }
 
-  .cell[data-state='dontwant'] {
+  .cell[data-priority='dontwant'] {
   	background-color: #FFA600;
   }
 
-  .cell[data-state='can'] {
+  .cell[data-priority='can'] {
     background-color: yellowgreen;
   }
 
-  .cell[data-state='want'] {
+  .cell[data-priority='want'] {
     background-color: greenyellow;
   }
 }
