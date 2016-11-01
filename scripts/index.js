@@ -42,7 +42,7 @@ var selectPriority = function(event){
   priority.select(selectedPriority)
 }
 
-var drawPriorities = function(selections){
+var drawSelections = function(selections){
   var cells = document.querySelectorAll('.timetable .cell')
   Array.prototype.forEach.call(cells, function(cell){
     cell.dataset.priority = ''
@@ -62,7 +62,7 @@ var drawPriorities = function(selections){
   })
 }
 
-drawPriorities([])
+drawSelections([])
 
 var addToSelections = function(day, duty, priority, selections){
   selections[priority] = selections[priority] || []
@@ -84,7 +84,7 @@ var addToSelections = function(day, duty, priority, selections){
   if (selections[priority].length > allowedPriorities[priority])
     selections[priority].shift()
 
-  drawPriorities(selections)
+  drawSelections(selections)
 }
 
 
