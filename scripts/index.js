@@ -29,14 +29,16 @@ var Priority = function(priorities){
 var priority = Priority(allowedPriorities)
 
 var selectPriority = function(event){
+  event.preventDefault()
+
   var options = document.querySelectorAll('.priorities .cell')
   Array.prototype.forEach.call(options, function(option){
     option.classList.remove('selected')
   })
 
-  event.target.classList.add('selected')
+  this.classList.add('selected')
 
-  var selectedPriority = event.target.dataset.priority
+  var selectedPriority = this.dataset.priority
   priority.select(selectedPriority)
 }
 
@@ -89,8 +91,8 @@ var addToSelections = function(day, duty, priority, selections){
 var plan = function(event){
   event.preventDefault()
 
-  var selectedDuty = event.target.dataset.duty
-  var selectedDay = event.target.dataset.day
+  var selectedDuty = this.dataset.duty
+  var selectedDay = this.dataset.day
   var currentPriority = priority.selected()
 
   addToSelections(selectedDay, selectedDuty, currentPriority, selections)
@@ -100,8 +102,8 @@ var plan = function(event){
 var clear = function(event){
   event.preventDefault()
 
-  var selectedDuty = event.target.dataset.duty
-  var selectedDay = event.target.dataset.day
+  var selectedDuty = this.dataset.duty
+  var selectedDay = this.dataset.day
   var currentPriority = priority.selected()
 
   addToSelections(selectedDay, selectedDuty, '', selections)
