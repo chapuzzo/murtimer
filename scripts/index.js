@@ -8,7 +8,7 @@ var allowedPriorities = {
   '': 14
 }
 
-var selections = {}
+var userSelections = {}
 
 var Priority = function(priorities){
   var current = 'want'
@@ -28,7 +28,7 @@ var Priority = function(priorities){
 
 var priority = Priority(allowedPriorities)
 
-var drawPriorities = function(){
+var drawPriorities = function(selections){
   var priorityElements = document.querySelectorAll('.priorities .cell')
   _.forEach(priorityElements, function(priorityElement){
     priorityElement.classList.remove('selected')
@@ -46,20 +46,15 @@ var drawPriorities = function(){
   })
 }
 
-var selectPriority = function(event){
-  event.preventDefault()
-
-  var selectedPriority = this.dataset.priority
-  priority.select(selectedPriority)
-
-  drawPriorities()
-}
-
-var drawSelections = function(selections){
+var clearSelections = function(){
   var cellElements = document.querySelectorAll('.timetable .cell')
   _.forEach(cellElements, function(cellElement){
     cellElement.dataset.priority = ''
   })
+}
+
+var drawSelections = function(selections){
+  clearSelections()
 
   _.forEach(selections, function(selections, priority){
     _.forEach(selections, function(selection){
@@ -68,10 +63,10 @@ var drawSelections = function(selections){
     })
   })
 
-  drawPriorities()
+  drawPriorities(selections)
 }
 
-drawSelections([])
+drawSelections({})
 
 var addToSelections = function(day, duty, priority, selections){
   selections[priority] = selections[priority] || []
@@ -96,7 +91,6 @@ var addToSelections = function(day, duty, priority, selections){
   drawSelections(selections)
 }
 
-
 var plan = function(event){
   event.preventDefault()
 
@@ -104,9 +98,8 @@ var plan = function(event){
   var selectedDay = this.dataset.day
   var currentPriority = priority.selected()
 
-  addToSelections(selectedDay, selectedDuty, currentPriority, selections)
+  addToSelections(selectedDay, selectedDuty, currentPriority, userSelections)
 }
-
 
 var clear = function(event){
   event.preventDefault()
@@ -115,20 +108,42 @@ var clear = function(event){
   var selectedDay = this.dataset.day
   var currentPriority = priority.selected()
 
-  addToSelections(selectedDay, selectedDuty, '', selections)
+  addToSelections(selectedDay, selectedDuty, '', userSelections)
+}
+
+var selectPriority = function(event){
+  event.preventDefault()
+
+  var selectedPriority = this.dataset.priority
+  priority.select(selectedPriority)
+
+  drawPriorities(userSelections)
 }
 
 document.addEventListener('DOMContentLoaded', function(){
+
   var cellElements = document.querySelectorAll('.timetable .cell')
+  var priorityElements = document.querySelectorAll('.priorities .cell')
+  var userSelector = document.querySelector('.user')
+  var saveButton = document.querySelector('.save')
+
   _.forEach(cellElements, function(cellElement){
     cellElement.addEventListener('touchstart', plan, false)
     cellElement.addEventListener('click', plan, false)
     cellElement.addEventListener('contextmenu', clear, false)
   })
 
-  var priorityElements = document.querySelectorAll('.priorities .cell')
   _.forEach(priorityElements, function(priorityElement){
     priorityElement.addEventListener('touchstart', selectPriority, false)
     priorityElement.addEventListener('click', selectPriority, false)
+  })
+
+  saveButton.addEventListener('click', function(){
+    var selections = JSON.parse(localStorage['murtimer-selections'] || '{}')
+
+    selections[userSelector.value] = userSelections
+    console.log(selections)
+
+    localStorage['murtimer-selections'] = JSON.stringify(selections)
   })
 })
