@@ -15,7 +15,7 @@ var Priority = function(priorities){
 
   return {
     select: function(name){
-      if (Object.keys(priorities).indexOf(name) < 0)
+      if (!_.has(priorities, name))
         return
 
       current = name
@@ -30,7 +30,7 @@ var priority = Priority(allowedPriorities)
 
 var drawPriorities = function(){
   var priorityElements = document.querySelectorAll('.priorities .cell')
-  Array.prototype.forEach.call(priorityElements, function(priorityElement){
+  _.forEach(priorityElements, function(priorityElement){
     priorityElement.classList.remove('selected')
   })
 
@@ -57,7 +57,7 @@ var selectPriority = function(event){
 
 var drawSelections = function(selections){
   var cellElements = document.querySelectorAll('.timetable .cell')
-  Array.prototype.forEach.call(cellElements, function(cellElement){
+  _.forEach(cellElements, function(cellElement){
     cellElement.dataset.priority = ''
   })
 
@@ -81,7 +81,7 @@ var addToSelections = function(day, duty, priority, selections){
     duty: duty
   }
 
-  if (_.find(selections[priority], builtSelection))
+  if (_.has(selections[priority], builtSelection))
     return
 
   _.forEach(selections, function(selections){
@@ -119,16 +119,16 @@ var clear = function(event){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
-  var cells = document.querySelectorAll('.timetable .cell')
-  Array.prototype.forEach.call(cells, function(cell){
-    cell.addEventListener('touchstart', plan, false)
-    cell.addEventListener('click', plan, false)
-    cell.addEventListener('dblclick', clear, false)
+  var cellElements = document.querySelectorAll('.timetable .cell')
+  _.forEach(cellElements, function(cellElement){
+    cellElement.addEventListener('touchstart', plan, false)
+    cellElement.addEventListener('click', plan, false)
+    cellElement.addEventListener('contextmenu', clear, false)
   })
 
-  var priorities = document.querySelectorAll('.priorities .cell')
-  Array.prototype.forEach.call(priorities, function(cell){
-    cell.addEventListener('touchstart', selectPriority, false)
-    cell.addEventListener('click', selectPriority, false)
+  var priorityElements = document.querySelectorAll('.priorities .cell')
+  _.forEach(priorityElements, function(priorityElement){
+    priorityElement.addEventListener('touchstart', selectPriority, false)
+    priorityElement.addEventListener('click', selectPriority, false)
   })
 })
