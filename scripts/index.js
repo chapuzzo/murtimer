@@ -66,7 +66,6 @@ var drawSelections = function(selections){
   drawPriorities(selections)
 }
 
-drawSelections({})
 
 var addToSelections = function(day, duty, priority, selections){
   selections[priority] = selections[priority] || []
@@ -121,11 +120,15 @@ var selectPriority = function(event){
 }
 
 document.addEventListener('DOMContentLoaded', function(){
+  if (document.querySelectorAll('.user-view').length  == 0)
+    return
 
   var cellElements = document.querySelectorAll('.timetable .cell')
   var priorityElements = document.querySelectorAll('.priorities .cell')
   var userSelector = document.querySelector('.user')
   var saveButton = document.querySelector('.save')
+
+  drawSelections(userSelections)
 
   _.forEach(cellElements, function(cellElement){
     cellElement.addEventListener('touchstart', plan, false)
@@ -138,6 +141,12 @@ document.addEventListener('DOMContentLoaded', function(){
     priorityElement.addEventListener('click', selectPriority, false)
   })
 
+  userSelector.addEventListener('change', function(){
+    clearSelections()
+    userSelections = {}
+    drawSelections(userSelections)
+  })
+
   saveButton.addEventListener('click', function(){
     var selections = JSON.parse(localStorage['murtimer-selections'] || '{}')
 
@@ -145,5 +154,32 @@ document.addEventListener('DOMContentLoaded', function(){
     console.log(selections)
 
     localStorage['murtimer-selections'] = JSON.stringify(selections)
+  })
+})
+
+document.addEventListener('DOMContentLoaded', function(){
+  if (document.querySelectorAll('.admin-view').length  == 0)
+    return
+
+  var selections = JSON.parse(localStorage['murtimer-selections'] || '{}')
+
+  _.forEach(selections, function(userSelections, userName){
+    _.forEach(userSelections, function(selections, priority){
+      _.forEach(selections, function(selection){
+        var person = document.createElement('div')
+
+        person.classList.add('cell')
+        person.classList.add('full-width')
+
+        person.innerHTML = userName
+        person.dataset.priority = priority
+        var currentSelectionQuery = '.cell[data-day="'+selection.day+'"][data-duty="'+selection.duty+'"]'
+
+        var desiredDuty = document.querySelector(currentSelectionQuery)
+
+        desiredDuty.appendChild(person)
+      })
+
+    })
   })
 })

@@ -14,10 +14,10 @@ html {
   @media only screen and (max-device-width: 480px) {
     font-size: 80%;
   }
+  font-family: monospace;
 }
 
-
-html, body {
+html, body, .user-view, .admin-view {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -26,11 +26,14 @@ html, body {
   flex-flow: column;
   align-items: center;
   justify-content: space-around;
-  font-family: monospace;
 }
 
 body {
   font: 100% / 1.5;
+}
+
+[hidden]{
+  display: none;
 }
 
 %centered_content {
@@ -70,6 +73,9 @@ body {
     .cell, .th {
       @extend %centered_content;
       flex: 1 1 0;
+      &.full-width {
+        width: 100%
+      }
     }
 
     .cell {
@@ -106,6 +112,19 @@ body {
 
   .cell {
     border: 1px grey solid;
+  }
+}
+
+.admin-view {
+  .header {
+    height: 10%;
+  }
+  .table.timetable {
+    width: 90%;
+    height: 60%;
+    .row {
+      margin: 5% 0;
+    }
   }
 }
 
