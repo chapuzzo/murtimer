@@ -11,76 +11,14 @@
 </head>
 <body>
 
-	<div class="user-view">
-		<div class="table timetable">
-			<div class="caption">Setmana que ve</div>
-			<div class="header">
-				<div class="row">
-					<div class="th">
-						<span>dia</span>
-						<span>\</span>
-						<span>hora</span>
-					</div>
-					<div class="th">DL</div>
-					<div class="th">DM</div>
-					<div class="th">DC</div>
-					<div class="th">DJ</div>
-					<div class="th"><span>DV</span></div>
-					<div class="th"><span>DS</span></div>
-					<div class="th"><span>DG</span></div>
-				</div>
-			</div>
-			<div class="body">
-				<div class="row">
-					<div class="th"><span>matí</span></div>
-					<div class="cell" data-duty="morning" data-day="mon"></div>
-					<div class="cell" data-duty="morning" data-day="tue"></div>
-					<div class="cell" data-duty="morning" data-day="wed"></div>
-					<div class="cell" data-duty="morning" data-day="thu"></div>
-					<div class="cell" data-duty="morning" data-day="fri"></div>
-					<div class="cell" data-duty="morning" data-day="sat"></div>
-					<div class="cell" data-duty="morning" data-day="sun"></div>
-				</div>
-				<div class="row">
-					<div class="th"><span>nit</span></div>
-					<div class="cell" data-duty="evening" data-day="mon"></div>
-					<div class="cell" data-duty="evening" data-day="tue"></div>
-					<div class="cell" data-duty="evening" data-day="wed"></div>
-					<div class="cell" data-duty="evening" data-day="thu"></div>
-					<div class="cell" data-duty="evening" data-day="fri"></div>
-					<div class="cell" data-duty="evening" data-day="sat"></div>
-					<div class="cell" data-duty="evening" data-day="sun"></div>
-				</div>
-			</div>
-		</div>
-
-		<div class="table priorities">
-			<div class="caption">opcions</div>
-			<div class="body">
-				<div class="row">
-					<div class="cell" data-priority="cant"><span>no puc</span><span class="count"></span></div>
-					<div class="cell" data-priority="dontwant"><span>no vull</span><span class="count"></span></div>
-					<div class="cell" data-priority="can"><span>puc</span><span class="count"></span></div>
-					<div class="cell" data-priority="want"><span>vull</span><span class="count"></span></div>
-					<div class="cell" data-priority="" style="display:none;"><span></span><span class="count"></span></div>
-				</div>
-			</div>
-		</div>
+	<div class="container">
 	</div>
-
-
-	<select type="select" class="user">
-		<option value="Anna">Anna</option>
-		<option value="Iván">Iván</option>
-		<option value="Karen">Karen</option>
-		<option value="Leti">Leti</option>
-		<option value="Minerva">Minerva</option>
-		<option value="Sènia">Sènia</option>
-	</select>
-	<input type="button" value="envia" class="save" >
 
 	<!-- // <script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.16.5/lodash.min.js"></script> -->
 	<script type="text/javascript" src="scripts/vendor/lodash.min.js"></script>
-	<script type="text/javascript" src="scripts/index.js"></script>
+	<script type="text/javascript" src="scripts/storage.js"></script>
+	<script type="text/javascript" src="scripts/weekPlanner.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
+
 </body>
 </html>
