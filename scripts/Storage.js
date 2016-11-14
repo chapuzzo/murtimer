@@ -17,6 +17,10 @@ var Storage = function(store){
       store.setItem(secureKey(key), normalize(data))
     },
 
+    remove: function(key){
+      store.removeItem(secureKey(key))
+    },
+
     retrieve: function(key, defaultValue){
       var fetchedValue = store.getItem(secureKey(key))
 
