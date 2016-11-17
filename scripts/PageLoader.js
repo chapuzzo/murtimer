@@ -6,6 +6,16 @@
     console.log(arguments)
     console.log(this)
 
+    var _request = function(url, callback){
+      var request = new XMLHttpRequest()
+      request.open('GET', url, true)
+      request.responseType = 'text'
+      request.addEventListener('load', function(event) {
+        callback(event.target.response)
+      })
+      request.send()
+    }
+
     var _load = function(name){
       console.log('loading page: ' + name)
 
@@ -16,34 +26,15 @@
         return
       }
 
-      var request = new XMLHttpRequest()
+      if (pageToLoad.header)
+        _request(pageToLoad.header, function(content){
+          document.querySelector('.header').innerHTML = content
+        })
 
-      request.open('GET', pageToLoad.url, true)
-
-      request.addEventListener('load', function() {
-        if (this.status == 200) {
-          var textResponse = this.responseText
-
-          document.querySelector(containerSelector).innerHTML = textResponse
-
-          if (pageToLoad.header) {
-            console.log('lading header')
-            console.log(pageToLoad.header)
-
-            var request2 = new XMLHttpRequest()
-            request2.open('GET', pageToLoad.header, true)
-            request2.responseType = 'text'
-            request2.addEventListener('load', function(){
-              document.querySelector('.header').innerHTML = this.response
-            })
-            request2.send()
-          }
-
-          pageToLoad.bindEvents(app)
-        }
+      _request(pageToLoad.url, function(content){
+        document.querySelector(containerSelector).innerHTML = content
+        pageToLoad.bindEvents(app)
       })
-
-      request.send()
     }
 
 
@@ -55,6 +46,9 @@
           var cellElements = document.querySelectorAll('.timetable .cell')
           var priorityElements = document.querySelectorAll('.priorities .cell')
           var saveButton = document.querySelector('.save')
+
+          var nameElement = document.querySelector('.header span.name')
+          nameElement.innerHTML = app.currentUser()
 
           var triggers = {
             plan: function(event){

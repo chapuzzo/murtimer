@@ -108,7 +108,13 @@
 
       logout: function(userData){
         storage.remove('current-user')
+      },
+
+      currentUser: function(){
+        return storage.retrieve('current-user')
       }
+
+
     }
   }
 
