@@ -67,12 +67,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-/* line 1, ../scss/_index.scss */
+/* line 1, ../scss/_app.scss */
 * {
   box-sizing: border-box;
 }
 
-/* line 5, ../scss/_index.scss */
+/* line 5, ../scss/_app.scss */
 html {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -85,34 +85,38 @@ html {
   font-family: monospace;
 }
 @media only screen and (max-device-width: 480px) {
-  /* line 5, ../scss/_index.scss */
+  /* line 5, ../scss/_app.scss */
   html {
     font-size: 80%;
   }
 }
 
-/* line 21, ../scss/_index.scss */
+/* line 21, ../scss/_app.scss */
 html, body {
   height: 100%;
 }
 
-/* line 26, ../scss/_index.scss */
+/* line 26, ../scss/_app.scss */
 body > .header {
   height: 10%;
   position: absolute;
   top: 0;
-  right: 0;
-  left: 0;
+  right: 10%;
+  left: 10%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* line 34, ../scss/_index.scss */
+/* line 38, ../scss/_app.scss */
 .container {
   width: 100%;
   height: 100%;
   padding-top: 10%;
 }
 
-/* line 40, ../scss/_index.scss */
+/* line 44, ../scss/_app.scss */
 .user-view, .admin-view, .login-view {
   width: 100%;
   height: 100%;
@@ -124,12 +128,7 @@ body > .header {
   justify-content: space-around;
 }
 
-/* line 51, ../scss/_index.scss */
-[hidden] {
-  display: none;
-}
-
-/* line 55, ../scss/_index.scss */
+/* line 55, ../scss/_app.scss */
 .table .caption, .table .row .cell, .table .row .th {
   display: flex;
   align-items: center;
@@ -137,117 +136,117 @@ body > .header {
   flex-flow: column;
 }
 
-/* line 62, ../scss/_index.scss */
+/* line 62, ../scss/_app.scss */
 .table, .table .header, .table .body {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
 }
 
-/* line 68, ../scss/_index.scss */
+/* line 68, ../scss/_app.scss */
 .table {
   width: 80%;
   margin: auto;
 }
-/* line 73, ../scss/_index.scss */
+/* line 73, ../scss/_app.scss */
 .table .caption {
   flex: 1 1 0;
 }
-/* line 78, ../scss/_index.scss */
+/* line 78, ../scss/_app.scss */
 .table .header, .table .body {
   flex: 1 1 0;
 }
-/* line 83, ../scss/_index.scss */
+/* line 83, ../scss/_app.scss */
 .table .row {
   flex: 1 1 0;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
 }
-/* line 89, ../scss/_index.scss */
+/* line 89, ../scss/_app.scss */
 .table .row .cell, .table .row .th {
   flex: 1 1 0;
 }
-/* line 92, ../scss/_index.scss */
+/* line 92, ../scss/_app.scss */
 .table .row .cell.full-width, .table .row .th.full-width {
   width: 100%;
 }
-/* line 97, ../scss/_index.scss */
+/* line 97, ../scss/_app.scss */
 .table .row .cell {
   cursor: pointer;
 }
 
-/* line 103, ../scss/_index.scss */
+/* line 103, ../scss/_app.scss */
 .table.priorities {
   height: 15%;
 }
-/* line 106, ../scss/_index.scss */
+/* line 106, ../scss/_app.scss */
 .table.priorities .body {
   flex: 4 4 0;
 }
-/* line 109, ../scss/_index.scss */
+/* line 109, ../scss/_app.scss */
 .table.priorities .body .cell {
   justify-content: space-around;
 }
-/* line 111, ../scss/_index.scss */
+/* line 111, ../scss/_app.scss */
 .table.priorities .body .cell.selected {
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
 }
 
-/* line 118, ../scss/_index.scss */
+/* line 118, ../scss/_app.scss */
 .table.timetable {
   height: 40%;
 }
-/* line 121, ../scss/_index.scss */
+/* line 121, ../scss/_app.scss */
 .table.timetable .body {
   flex: 2 2 0;
 }
-/* line 125, ../scss/_index.scss */
+/* line 125, ../scss/_app.scss */
 .table.timetable .table, .table.timetable .th, .table.timetable .cell {
   border: 1px black solid;
 }
-/* line 129, ../scss/_index.scss */
+/* line 129, ../scss/_app.scss */
 .table.timetable .cell {
   border: 1px grey solid;
 }
 
-/* line 135, ../scss/_index.scss */
+/* line 135, ../scss/_app.scss */
 .admin-view .header {
   height: 10%;
 }
-/* line 138, ../scss/_index.scss */
+/* line 138, ../scss/_app.scss */
 .admin-view .table.timetable {
   width: 90%;
   height: 60%;
 }
-/* line 141, ../scss/_index.scss */
+/* line 141, ../scss/_app.scss */
 .admin-view .table.timetable .row {
   margin: 5% 0;
 }
 
-/* line 148, ../scss/_index.scss */
+/* line 148, ../scss/_app.scss */
 .table .cell[data-priority='cant'] {
   background-color: tomato;
 }
-/* line 152, ../scss/_index.scss */
+/* line 152, ../scss/_app.scss */
 .table .cell[data-priority='dontwant'] {
   background-color: #FFA600;
 }
-/* line 156, ../scss/_index.scss */
+/* line 156, ../scss/_app.scss */
 .table .cell[data-priority='can'] {
   background-color: yellowgreen;
 }
-/* line 160, ../scss/_index.scss */
+/* line 160, ../scss/_app.scss */
 .table .cell[data-priority='want'] {
   background-color: greenyellow;
 }
 
-/* line 166, ../scss/_index.scss */
+/* line 166, ../scss/_app.scss */
 .login-view select, .login-view input {
   font-size: 3rem;
 }
 
-/* line 171, ../scss/_index.scss */
+/* line 171, ../scss/_app.scss */
 body > .header {
   font-size: 2rem;
   text-align: center;
