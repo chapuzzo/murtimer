@@ -91,6 +91,7 @@
         _.forEach(userSelections, function(eachPrioritySelections){
           _.remove(eachPrioritySelections, builtSelection)
         })
+        drawSelections(userSelections)
       },
 
       saveUserSelections: function(){
