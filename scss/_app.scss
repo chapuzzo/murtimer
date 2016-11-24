@@ -33,6 +33,15 @@ body > .header {
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: center;
+  input {
+    font-size: inherit;
+    background: lighten(orange, 20%);
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3) inset;
+    cursor: pointer;
+  }
 }
 
 .container {
