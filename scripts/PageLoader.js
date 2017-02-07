@@ -29,6 +29,8 @@
       if (pageToLoad.header)
         _request(pageToLoad.header, function(content){
           document.querySelector('.header').innerHTML = content
+          if (pageToLoad.bindHeaderEvents)
+            pageToLoad.bindHeaderEvents(app)
         })
 
       _request(pageToLoad.url, function(content){
@@ -42,10 +44,16 @@
       user: {
         url: 'pages/user.html',
         header: 'pages/header.html',
+        bindHeaderEvents: function(app){
+          var saveButton = document.querySelector('.save')
+
+          saveButton.addEventListener('click', function(){
+            app.saveUserSelections()
+          })
+        },
         bindEvents: function(app){
           var cellElements = document.querySelectorAll('.timetable .cell')
           var priorityElements = document.querySelectorAll('.priorities .cell')
-          var saveButton = document.querySelector('.save')
 
           var nameElement = document.querySelector('.header span.name')
           nameElement.innerHTML = app.currentUser()
@@ -79,18 +87,14 @@
           }
 
           _.forEach(cellElements, function(cellElement){
-            cellElement.addEventListener('touchstart', triggers.plan, false)
+            // cellElement.addEventListener('touchstart', triggers.plan, false)
             cellElement.addEventListener('click', triggers.plan, false)
-            cellElement.addEventListener('contextmenu', triggers.clear, false)
+            cellElement.addEventListener('dblclick', triggers.clear, false)
           })
 
           _.forEach(priorityElements, function(priorityElement){
-            priorityElement.addEventListener('touchstart', triggers.selectPriority, false)
+            // priorityElement.addEventListener('touchstart', triggers.selectPriority, false)
             priorityElement.addEventListener('click', triggers.selectPriority, false)
-          })
-
-          saveButton.addEventListener('click', function(){
-            app.saveUserSelections()
           })
 
           app.drawUserSelections()
