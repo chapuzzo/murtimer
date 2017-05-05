@@ -113,9 +113,11 @@
 
       currentUser: function(){
         return storage.retrieve('current-user')
+      },
+
+      workersSelections: function(){
+        return storage.json('selections', {})
       }
-
-
     }
   }
 

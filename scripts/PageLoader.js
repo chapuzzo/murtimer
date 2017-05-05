@@ -50,13 +50,19 @@
           saveButton.addEventListener('click', function(){
             app.saveUserSelections()
           })
+
+          var exitButton = document.querySelector('.logout')
+
+          exitButton.addEventListener('click', function(){
+            _load('login')
+          })
+
+          var nameElement = document.querySelector('.header span.name')
+          nameElement.innerHTML = app.currentUser()
         },
         bindEvents: function(app){
           var cellElements = document.querySelectorAll('.timetable .cell')
           var priorityElements = document.querySelectorAll('.priorities .cell')
-
-          var nameElement = document.querySelector('.header span.name')
-          nameElement.innerHTML = app.currentUser()
 
           var triggers = {
             plan: function(event){
@@ -101,9 +107,73 @@
         }
       },
 
-      admin: {
+      plan: {
         url: 'pages/admin.html',
-        bindEvents: function(){/*
+        header: 'pages/header.html',
+        bindHeaderEvents: function(app){
+          var saveButton = document.querySelector('.save')
+
+          saveButton.addEventListener('click', function(){
+            app.saveUserSelections()
+          })
+
+          var exitButton = document.querySelector('.logout')
+
+          exitButton.addEventListener('click', function(){
+            _load('login')
+          })
+
+          var nameElement = document.querySelector('.header div')
+          nameElement.remove()
+          saveButton.remove()
+        },
+        bindEvents: function(){
+          var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+          var duties = ['morning', 'evening']
+          var workers = ['Anna', 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse']
+
+          var createUserSelector = function(userName){
+            var element = document.createElement('div')
+            element.classList.add('cell')
+            element.dataset.worker = userName
+            element.innerHTML = userName
+
+            return element
+          }
+
+
+          _.forEach(weekDays, function(weekDay){
+            _.forEach(duties, function(duty){
+              var parentSelector = '[data-duty="' + duty + '"][data-day="' + weekDay + '"]'
+              var parent = document.querySelector(parentSelector)
+              _.forEach(workers,function(worker){
+                parent.appendChild(createUserSelector(worker))
+              })
+            })
+          })
+
+          var priorities = app.workersSelections()
+          console.log(priorities)
+          _.forEach(workers, function(worker){
+            console.log(worker)
+            var workerPriorities = priorities[worker] || []
+            console.log(workerPriorities)
+            _.forEach(workerPriorities, function(selections, priority){
+              console.log(selections)
+              console.log(priority)
+
+              _.forEach(selections, function(selection){
+                var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
+                var workerDuty = document.querySelector(workerDutySelector)
+                console.log(workerDuty)
+
+                workerDuty.dataset.priority = priority
+              })
+
+            })
+          })
+
+        /*
           var selections = app.json('selections', {})
 
           _.forEach(selections, function(userSelections, userName){
@@ -130,16 +200,24 @@
       login: {
         url: 'pages/login.html',
         bindEvents: function(app){
+          var headerContents = document.querySelectorAll('.header > *')
+          if (headerContents)
+            _.forEach(headerContents, function(headerContent){
+              headerContent.remove()
+            })
+
           console.log(arguments)
           var userSelector = document.querySelector('.user')
           var loginButton = document.querySelector('.login')
+          var planButton = document.querySelector('.plan')
 
           loginButton.addEventListener('click', function(){
-            console.log(this)
-            console.log(app)
-
             app.login(userSelector.value)
             _load('user')
+          })
+
+          planButton.addEventListener('click', function(){
+            _load('plan')
           })
         }
       }
