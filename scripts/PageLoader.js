@@ -153,11 +153,7 @@
           })
 
           var priorities = app.workersSelections()
-          console.log(priorities)
-          _.forEach(workers, function(worker){
-            console.log(worker)
-            var workerPriorities = priorities[worker] || []
-            console.log(workerPriorities)
+          _.forEach(priorities, function(workerPriorities, worker){
             _.forEach(workerPriorities, function(selections, priority){
               console.log(selections)
               console.log(priority)
@@ -172,29 +168,7 @@
 
             })
           })
-
-        /*
-          var selections = app.json('selections', {})
-
-          _.forEach(selections, function(userSelections, userName){
-            _.forEach(userSelections, function(selections, priority){
-              _.forEach(selections, function(selection){
-                var person = document.createElement('div')
-
-                person.classList.add('cell')
-                person.classList.add('full-width')
-
-                person.innerHTML = userName
-                person.dataset.priority = priority
-                var currentSelectionQuery = '.cell[data-day="'+selection.day+'"][data-duty="'+selection.duty+'"]'
-
-                var desiredDuty = document.querySelector(currentSelectionQuery)
-
-                desiredDuty.appendChild(person)
-              })
-            })
-          })
-        */}
+        }
       },
 
       login: {
