@@ -3,7 +3,6 @@
 !(function(ns){
 
   ns.WeekPlanner = function(priorities, initialPriority, storage){
-    console.log(arguments)
     var currentPriority = initialPriority
     var userSelections = {}
     var shifts = []
@@ -95,6 +94,64 @@
       })
     }
 
+    var drawShiftAssigner = function(){
+      var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+      var duties = ['morning', 'evening']
+      var workers = ['Anna', 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse']
+
+      var createUserSelector = function(userName, day, duty){
+        var element = document.createElement('div')
+        element.classList.add('cell')
+        element.dataset.worker = userName
+        element.dataset.day = day
+        element.dataset.duty = duty
+        element.innerHTML = userName
+
+        element.addEventListener('click', function(event){
+          assignShift(userName, day, duty)
+        })
+
+        return element
+      }
+
+      _.forEach(weekDays, function(weekDay){
+        _.forEach(duties, function(duty){
+          var parentSelector = '[data-duty="' + duty + '"][data-day="' + weekDay + '"]'
+          var parent = document.querySelector(parentSelector)
+          _.forEach(workers,function(worker){
+            parent.appendChild(createUserSelector(worker, weekDay, duty))
+          })
+        })
+      })
+
+      var priorities = workersSelections()
+      _.forEach(priorities, function(priorities, worker){
+        _.forEach(priorities, function(selections, priority){
+          _.forEach(selections, function(selection){
+            var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
+            var workerDutySelection = document.querySelector(workerDutySelector)
+
+            workerDutySelection.dataset.priority = priority
+          })
+        })
+      })
+    }
+
+    var workersSelections = function(){
+      return storage.json('selections', {})
+    }
+
+    var assignShift = function(worker, day, duty){
+      var shiftToAdd = buildShift(worker, day, duty)
+
+      if (_.find(shifts, shiftToAdd))
+        _.remove(shifts, shiftToAdd)
+      else
+        shifts.push(shiftToAdd)
+
+      drawSelectedShifts(shifts)
+    }
+
     return {
       drawUserSelections: function(){
         drawSelections(userSelections)
@@ -149,32 +206,24 @@
         return storage.retrieve('current-user')
       },
 
-      workersSelections: function(){
-        return storage.json('selections', {})
-      },
+      workersSelections: workersSelections,
 
-      assignShift: function(worker, day, duty){
-        var shiftToAdd = buildShift(worker, day, duty)
+      assignShift: assignShift,
 
-        var currentShiftFinder = function(shift){
-          console.log(shift)
-          return shift.worker == worker &&
-                 shift.day == day &&
-                 shift.duty == duty
-        }
+      drawSelectedShifts: drawSelectedShifts,
 
-        if (_.find(shifts, currentShiftFinder))
-          _.remove(shifts, currentShiftFinder)
-        else
-          shifts.push(shiftToAdd)
-
-        drawSelectedShifts(shifts)
+      drawStoredShifts: function(){
+        var storedShifts = storage.json('shifts', [])
+        drawSelectedShifts(storedShifts)
       },
 
       saveShifts: function(){
         storage.save('shifts', shifts)
       },
-      drawUserShifts: drawUserShifts
+
+      drawUserShifts: drawUserShifts,
+
+      drawShiftAssigner: drawShiftAssigner
     }
   }
 

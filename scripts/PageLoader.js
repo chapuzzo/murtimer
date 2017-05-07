@@ -3,8 +3,6 @@
 !(function(ns){
 
   ns.PageLoader = function(containerSelector, app){
-    console.log(arguments)
-    console.log(this)
 
     var _request = function(url, callback){
       var request = new XMLHttpRequest()
@@ -145,47 +143,8 @@
           nameElement.remove()
         },
         bindEvents: function(){
-          var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
-          var duties = ['morning', 'evening']
-          var workers = ['Anna', 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse']
-
-          var createUserSelector = function(userName, day, duty){
-            var element = document.createElement('div')
-            element.classList.add('cell')
-            element.dataset.worker = userName
-            element.dataset.day = day
-            element.dataset.duty = duty
-            element.innerHTML = userName
-
-            element.addEventListener('click', function(event){
-              console.log(userName, day, duty)
-              app.assignShift(userName, day, duty)
-            })
-
-            return element
-          }
-
-          _.forEach(weekDays, function(weekDay){
-            _.forEach(duties, function(duty){
-              var parentSelector = '[data-duty="' + duty + '"][data-day="' + weekDay + '"]'
-              var parent = document.querySelector(parentSelector)
-              _.forEach(workers,function(worker){
-                parent.appendChild(createUserSelector(worker, weekDay, duty))
-              })
-            })
-          })
-
-          var priorities = app.workersSelections()
-          _.forEach(priorities, function(workerPriorities, worker){
-            _.forEach(workerPriorities, function(selections, priority){
-              _.forEach(selections, function(selection){
-                var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
-                var workerDutySelection = document.querySelector(workerDutySelector)
-
-                workerDutySelection.dataset.priority = priority
-              })
-            })
-          })
+          app.drawShiftAssigner()
+          app.drawStoredShifts()
         }
       },
 
@@ -199,7 +158,6 @@
               headerContent.remove()
             })
 
-          console.log(arguments)
           var userSelector = document.querySelector('.user')
           var loginButton = document.querySelector('.login')
           var planButton = document.querySelector('.plan')
