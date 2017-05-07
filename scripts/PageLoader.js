@@ -66,22 +66,13 @@
           var priorityElements = document.querySelectorAll('.priorities .cell')
 
           var triggers = {
-            plan: function(event){
+            toggle: function(event){
               event.preventDefault()
 
               var selectedDuty = this.dataset.duty
               var selectedDay = this.dataset.day
 
-              app.addToSelections(selectedDay, selectedDuty)
-            },
-
-            clear: function(event){
-              event.preventDefault()
-
-              var selectedDuty = this.dataset.duty
-              var selectedDay = this.dataset.day
-
-              app.clearSelection(selectedDay, selectedDuty)
+              app.toggleUserSelection(selectedDay, selectedDuty)
             },
 
             selectPriority: function(event){
@@ -94,9 +85,8 @@
           }
 
           _.forEach(cellElements, function(cellElement){
-            // cellElement.addEventListener('touchstart', triggers.plan, false)
-            cellElement.addEventListener('click', triggers.plan, false)
-            cellElement.addEventListener('dblclick', triggers.clear, false)
+            // cellElement.addEventListener('touchstart', triggers.toggle, false)
+            cellElement.addEventListener('click', triggers.toggle, false)
           })
 
           _.forEach(priorityElements, function(priorityElement){
@@ -194,7 +184,6 @@
 
                 workerDutySelection.dataset.priority = priority
               })
-
             })
           })
         }

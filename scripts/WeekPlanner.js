@@ -77,7 +77,7 @@
       })
     }
 
-    var drawShifts = function(shifts){
+    var drawSelectedShifts = function(shifts){
       var workerCells = document.querySelectorAll('[data-worker]')
       _.forEach(workerCells, function(workerCell){
         workerCell.dataset.assigned = false
@@ -89,6 +89,11 @@
       })
     }
 
+    var clearSelection =  function(builtSelection){
+      _.forEach(userSelections, function(eachPrioritySelections){
+        _.remove(eachPrioritySelections, builtSelection)
+      })
+    }
 
     return {
       drawUserSelections: function(){
@@ -103,30 +108,22 @@
         drawPriorities(userSelections)
       },
 
-      addToSelections: function(day, duty){
+      toggleUserSelection: function(day, duty){
         userSelections[currentPriority] = userSelections[currentPriority] || []
 
         var builtSelection = buildSelection(day, duty)
 
-        if (_.has(userSelections[currentPriority], builtSelection))
-          return
-
-        this.clearSelection(day, duty)
-
-        userSelections[currentPriority].push(builtSelection)
+        if (_.find(userSelections[currentPriority], builtSelection)){
+          clearSelection(builtSelection)
+        }
+        else {
+          clearSelection(builtSelection)
+          userSelections[currentPriority].push(builtSelection)
+        }
 
         if (userSelections[currentPriority].length > priorities[currentPriority])
           userSelections[currentPriority].shift()
 
-        drawSelections(userSelections)
-      },
-
-      clearSelection: function(day, duty){
-        var builtSelection = buildSelection(day, duty)
-
-        _.forEach(userSelections, function(eachPrioritySelections){
-          _.remove(eachPrioritySelections, builtSelection)
-        })
         drawSelections(userSelections)
       },
 
@@ -141,7 +138,7 @@
 
       login: function(userData){
         storage.save('current-user', userData)
-        userSelections = storage.json('selections')[userData] || {}
+        userSelections = storage.json('selections', {})[userData] || {}
       },
 
       logout: function(){
@@ -171,7 +168,7 @@
         else
           shifts.push(shiftToAdd)
 
-        drawShifts(shifts)
+        drawSelectedShifts(shifts)
       },
 
       saveShifts: function(){
