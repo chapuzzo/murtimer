@@ -54,6 +54,7 @@
           var exitButton = document.querySelector('.logout')
 
           exitButton.addEventListener('click', function(){
+            app.logout()
             _load('login')
           })
 
@@ -106,9 +107,8 @@
           app.drawUserSelections()
         }
       },
-
-      plan: {
-        url: 'pages/admin.html',
+      check: {
+        url: 'pages/user.html',
         header: 'pages/header.html',
         bindHeaderEvents: function(app){
           var saveButton = document.querySelector('.save')
@@ -120,34 +120,67 @@
           var exitButton = document.querySelector('.logout')
 
           exitButton.addEventListener('click', function(){
+            app.logout()
+            _load('login')
+          })
+
+          var nameElement = document.querySelector('.header span.name')
+          nameElement.innerHTML = app.currentUser()
+          saveButton.remove()
+        },
+        bindEvents: function(app){
+          app.drawUserSelections()
+          app.drawUserShifts()
+        }
+      },
+
+      plan: {
+        url: 'pages/admin.html',
+        header: 'pages/header.html',
+        bindHeaderEvents: function(app){
+          var saveButton = document.querySelector('.save')
+
+          saveButton.addEventListener('click', function(){
+            app.saveShifts()
+          })
+
+          var exitButton = document.querySelector('.logout')
+
+          exitButton.addEventListener('click', function(){
+            app.logout()
             _load('login')
           })
 
           var nameElement = document.querySelector('.header div')
           nameElement.remove()
-          saveButton.remove()
         },
         bindEvents: function(){
           var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
           var duties = ['morning', 'evening']
           var workers = ['Anna', 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse']
 
-          var createUserSelector = function(userName){
+          var createUserSelector = function(userName, day, duty){
             var element = document.createElement('div')
             element.classList.add('cell')
             element.dataset.worker = userName
+            element.dataset.day = day
+            element.dataset.duty = duty
             element.innerHTML = userName
+
+            element.addEventListener('click', function(event){
+              console.log(userName, day, duty)
+              app.assignShift(userName, day, duty)
+            })
 
             return element
           }
-
 
           _.forEach(weekDays, function(weekDay){
             _.forEach(duties, function(duty){
               var parentSelector = '[data-duty="' + duty + '"][data-day="' + weekDay + '"]'
               var parent = document.querySelector(parentSelector)
               _.forEach(workers,function(worker){
-                parent.appendChild(createUserSelector(worker))
+                parent.appendChild(createUserSelector(worker, weekDay, duty))
               })
             })
           })
@@ -155,15 +188,11 @@
           var priorities = app.workersSelections()
           _.forEach(priorities, function(workerPriorities, worker){
             _.forEach(workerPriorities, function(selections, priority){
-              console.log(selections)
-              console.log(priority)
-
               _.forEach(selections, function(selection){
                 var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
-                var workerDuty = document.querySelector(workerDutySelector)
-                console.log(workerDuty)
+                var workerDutySelection = document.querySelector(workerDutySelector)
 
-                workerDuty.dataset.priority = priority
+                workerDutySelection.dataset.priority = priority
               })
 
             })
@@ -175,6 +204,7 @@
         url: 'pages/login.html',
         bindEvents: function(app){
           var headerContents = document.querySelectorAll('.header > *')
+
           if (headerContents)
             _.forEach(headerContents, function(headerContent){
               headerContent.remove()
@@ -184,6 +214,7 @@
           var userSelector = document.querySelector('.user')
           var loginButton = document.querySelector('.login')
           var planButton = document.querySelector('.plan')
+          var checkButton = document.querySelector('.check')
 
           loginButton.addEventListener('click', function(){
             app.login(userSelector.value)
@@ -192,6 +223,11 @@
 
           planButton.addEventListener('click', function(){
             _load('plan')
+          })
+
+          checkButton.addEventListener('click', function(){
+            app.login(userSelector.value)
+            _load('check')
           })
         }
       }

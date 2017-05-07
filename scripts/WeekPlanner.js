@@ -6,9 +6,18 @@
     console.log(arguments)
     var currentPriority = initialPriority
     var userSelections = {}
+    var shifts = []
 
     var buildSelection = function(day, duty){
       return {
+        day: day,
+        duty: duty
+      }
+    }
+
+    var buildShift = function(worker, day, duty){
+      return {
+        worker: worker,
         day: day,
         duty: duty
       }
@@ -52,9 +61,36 @@
       drawPriorities(selections)
     }
 
+    var drawUserShifts = function(){
+      var shifts = storage.json('shifts', [])
+      var currentUser = storage.retrieve('current-user')
+
+      console.log(shifts)
+      console.log(currentUser)
+
+      _.forEach(shifts, function(shift){
+        if (shift.worker != currentUser )
+          return
+
+        var currentSlotQuery = '.cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"]'
+        document.querySelector(currentSlotQuery).dataset.assigned = true
+      })
+    }
+
+    var drawShifts = function(shifts){
+      var workerCells = document.querySelectorAll('[data-worker]')
+      _.forEach(workerCells, function(workerCell){
+        workerCell.dataset.assigned = false
+      })
+
+      _.forEach(shifts, function(shift){
+        var currentShiftQuery = '.cell .cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"][data-worker="' + shift.worker + '"]'
+        document.querySelector(currentShiftQuery).dataset.assigned = true
+      })
+    }
+
 
     return {
-
       drawUserSelections: function(){
         drawSelections(userSelections)
       },
@@ -100,14 +136,15 @@
 
         selections[currentUser] = userSelections
 
-        storage.save('selections', selections )
+        storage.save('selections', selections)
       },
 
       login: function(userData){
         storage.save('current-user', userData)
+        userSelections = storage.json('selections')[userData] || {}
       },
 
-      logout: function(userData){
+      logout: function(){
         storage.remove('current-user')
       },
 
@@ -117,7 +154,30 @@
 
       workersSelections: function(){
         return storage.json('selections', {})
-      }
+      },
+
+      assignShift: function(worker, day, duty){
+        var shiftToAdd = buildShift(worker, day, duty)
+
+        var currentShiftFinder = function(shift){
+          console.log(shift)
+          return shift.worker == worker &&
+                 shift.day == day &&
+                 shift.duty == duty
+        }
+
+        if (_.find(shifts, currentShiftFinder))
+          _.remove(shifts, currentShiftFinder)
+        else
+          shifts.push(shiftToAdd)
+
+        drawShifts(shifts)
+      },
+
+      saveShifts: function(){
+        storage.save('shifts', shifts)
+      },
+      drawUserShifts: drawUserShifts
     }
   }
 

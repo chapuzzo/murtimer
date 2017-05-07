@@ -178,6 +178,24 @@ body > .header {
   .cell[data-priority='want'] {
     background-color: greenyellow;
   }
+
+  .cell[data-assigned='true'] {
+    font-weight: bold;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: calc(50% - 5px);
+      left: calc(50% - 10px);
+      height: 10px;
+      width: 20px;
+      border-left: 5px blue solid;
+      border-bottom: 5px blue solid;
+      opacity: 0.3;
+      transform: rotate(-45deg);
+    }
+  }
 }
 
 .login-view {

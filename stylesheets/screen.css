@@ -259,13 +259,31 @@ body > .header input {
 .table .cell[data-priority='want'] {
   background-color: greenyellow;
 }
+/* line 182, ../scss/_app.scss */
+.table .cell[data-assigned='true'] {
+  font-weight: bold;
+  position: relative;
+}
+/* line 186, ../scss/_app.scss */
+.table .cell[data-assigned='true']:before {
+  content: '';
+  position: absolute;
+  bottom: calc(50% - 5px);
+  left: calc(50% - 10px);
+  height: 10px;
+  width: 20px;
+  border-left: 5px blue solid;
+  border-bottom: 5px blue solid;
+  opacity: 0.3;
+  transform: rotate(-45deg);
+}
 
-/* line 184, ../scss/_app.scss */
+/* line 202, ../scss/_app.scss */
 .login-view select, .login-view input {
   font-size: 2rem;
 }
 
-/* line 190, ../scss/_app.scss */
+/* line 208, ../scss/_app.scss */
 body > .header {
   font-size: 1.5rem;
   text-align: center;
