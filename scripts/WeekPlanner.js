@@ -6,6 +6,7 @@
     var currentPriority = initialPriority
     var userSelections = {}
     var shifts = []
+    var currentUser
 
     var buildSelection = function(day, duty){
       return {
@@ -60,12 +61,8 @@
       drawPriorities(selections)
     }
 
-    var drawUserShifts = function(){
+    var drawWorkerShifts = function(){
       var shifts = storage.json('shifts', [])
-      var currentUser = storage.retrieve('current-user')
-
-      console.log(shifts)
-      console.log(currentUser)
 
       _.forEach(shifts, function(shift){
         if (shift.worker != currentUser )
@@ -76,7 +73,7 @@
       })
     }
 
-    var drawSelectedShifts = function(shifts){
+    var drawShifts = function(shifts){
       var workerCells = document.querySelectorAll('[data-worker]')
       _.forEach(workerCells, function(workerCell){
         workerCell.dataset.assigned = false
@@ -149,15 +146,28 @@
       else
         shifts.push(shiftToAdd)
 
-      drawSelectedShifts(shifts)
+      drawShifts(shifts)
     }
 
     return {
-      drawUserSelections: function(){
+      login: function(user){
+        currentUser = user
+        userSelections = storage.json('selections', {})[user] || {}
+      },
+
+      logout: function(){
+        currentUser = null
+      },
+
+      currentUser: function(){
+        return currentUser
+      },
+
+      drawWorkerSelections: function(){
         drawSelections(userSelections)
       },
 
-      selectPriority: function(name){
+      selectWorkerPriority: function(name){
         if (!_.has(priorities, name))
           return
 
@@ -165,7 +175,7 @@
         drawPriorities(userSelections)
       },
 
-      toggleUserSelection: function(day, duty){
+      toggleWorkerSelection: function(day, duty){
         userSelections[currentPriority] = userSelections[currentPriority] || []
 
         var builtSelection = buildSelection(day, duty)
@@ -184,44 +194,24 @@
         drawSelections(userSelections)
       },
 
-      saveUserSelections: function(){
+      saveWorkerSelections: function(){
         var selections = storage.json('selections', {})
-        var currentUser = storage.retrieve('current-user')
 
         selections[currentUser] = userSelections
 
         storage.save('selections', selections)
       },
 
-      login: function(userData){
-        storage.save('current-user', userData)
-        userSelections = storage.json('selections', {})[userData] || {}
-      },
-
-      logout: function(){
-        storage.remove('current-user')
-      },
-
-      currentUser: function(){
-        return storage.retrieve('current-user')
-      },
-
-      workersSelections: workersSelections,
-
-      assignShift: assignShift,
-
-      drawSelectedShifts: drawSelectedShifts,
+      drawWorkerShifts: drawWorkerShifts,
 
       drawStoredShifts: function(){
-        var storedShifts = storage.json('shifts', [])
-        drawSelectedShifts(storedShifts)
+        shifts =  storage.json('shifts', [])
+        drawShifts(shifts)
       },
 
       saveShifts: function(){
         storage.save('shifts', shifts)
       },
-
-      drawUserShifts: drawUserShifts,
 
       drawShiftAssigner: drawShiftAssigner
     }

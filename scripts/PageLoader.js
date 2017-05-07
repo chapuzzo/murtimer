@@ -46,7 +46,7 @@
           var saveButton = document.querySelector('.save')
 
           saveButton.addEventListener('click', function(){
-            app.saveUserSelections()
+            app.saveWorkerSelections()
           })
 
           var exitButton = document.querySelector('.logout')
@@ -70,7 +70,7 @@
               var selectedDuty = this.dataset.duty
               var selectedDay = this.dataset.day
 
-              app.toggleUserSelection(selectedDay, selectedDuty)
+              app.toggleWorkerSelection(selectedDay, selectedDuty)
             },
 
             selectPriority: function(event){
@@ -78,7 +78,7 @@
 
               var selectedPriority = this.dataset.priority
 
-              app.selectPriority(selectedPriority)
+              app.selectWorkerPriority(selectedPriority)
             }
           }
 
@@ -92,33 +92,30 @@
             priorityElement.addEventListener('click', triggers.selectPriority, false)
           })
 
-          app.drawUserSelections()
+          app.drawWorkerSelections()
         }
       },
+
       check: {
         url: 'pages/user.html',
         header: 'pages/header.html',
         bindHeaderEvents: function(app){
-          var saveButton = document.querySelector('.save')
-
-          saveButton.addEventListener('click', function(){
-            app.saveUserSelections()
-          })
-
           var exitButton = document.querySelector('.logout')
+          var nameElement = document.querySelector('.header span.name')
+          var saveButton = document.querySelector('.save')
 
           exitButton.addEventListener('click', function(){
             app.logout()
             _load('login')
           })
 
-          var nameElement = document.querySelector('.header span.name')
           nameElement.innerHTML = app.currentUser()
+
           saveButton.remove()
         },
         bindEvents: function(app){
-          app.drawUserSelections()
-          app.drawUserShifts()
+          app.drawWorkerSelections()
+          app.drawWorkerShifts()
         }
       },
 
@@ -142,9 +139,29 @@
           var nameElement = document.querySelector('.header div')
           nameElement.remove()
         },
-        bindEvents: function(){
+        bindEvents: function(app){
           app.drawShiftAssigner()
           app.drawStoredShifts()
+        }
+      },
+
+      timetable: {
+        url: 'pages/admin.html',
+        header: 'pages/header.html',
+        bindHeaderEvents: function(app){
+          var exitButton = document.querySelector('.logout')
+          var nameElement = document.querySelector('.header div')
+          var saveButton = document.querySelector('.save')
+
+          exitButton.addEventListener('click', function(){
+            app.logout()
+            _load('login')
+          })
+
+          nameElement.remove()
+          saveButton.remove()
+        },
+        bindEvents: function(app){
         }
       },
 
@@ -162,6 +179,7 @@
           var loginButton = document.querySelector('.login')
           var planButton = document.querySelector('.plan')
           var checkButton = document.querySelector('.check')
+          var timetableButton = document.querySelector('.timetable')
 
           loginButton.addEventListener('click', function(){
             app.login(userSelector.value)
@@ -175,6 +193,10 @@
           checkButton.addEventListener('click', function(){
             app.login(userSelector.value)
             _load('check')
+          })
+
+          timetableButton.addEventListener('click', function(){
+            _load('timetable')
           })
         }
       }
