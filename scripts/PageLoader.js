@@ -162,6 +162,7 @@
           saveButton.remove()
         },
         bindEvents: function(app){
+          app.drawTimetable()
         }
       },
 

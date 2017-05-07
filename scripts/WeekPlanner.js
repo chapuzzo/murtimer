@@ -149,6 +149,24 @@
       drawShifts(shifts)
     }
 
+    var drawTimetable = function(){
+      var priorities = workersSelections()
+      _.forEach(priorities, function(priorities, worker){
+        _.forEach(priorities, function(selections, priority){
+          _.forEach(selections, function(selection){
+            var shiftSelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"]'
+            var shift = document.querySelector(shiftSelector)
+
+            var element = document.createElement('div')
+            element.classList.add('cell')
+            element.innerHTML = worker
+
+            shift.appendChild(element)
+          })
+        })
+      })
+    }
+
     return {
       login: function(user){
         currentUser = user
@@ -213,7 +231,9 @@
         storage.save('shifts', shifts)
       },
 
-      drawShiftAssigner: drawShiftAssigner
+      drawShiftAssigner: drawShiftAssigner,
+
+      drawTimetable: drawTimetable
     }
   }
 
