@@ -150,20 +150,16 @@
     }
 
     var drawTimetable = function(){
-      var priorities = workersSelections()
-      _.forEach(priorities, function(priorities, worker){
-        _.forEach(priorities, function(selections, priority){
-          _.forEach(selections, function(selection){
-            var shiftSelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"]'
-            var shift = document.querySelector(shiftSelector)
+      var shifts = storage.json('shifts', [])
+      _.forEach(shifts, function(shift){
+        var shiftSelector = '.cell[data-duty="' + shift.duty + '"][data-day="' + shift.day + '"]'
+        var shiftCell = document.querySelector(shiftSelector)
 
-            var element = document.createElement('div')
-            element.classList.add('cell')
-            element.innerHTML = worker
+        var element = document.createElement('div')
+        element.classList.add('cell')
+        element.innerHTML = shift.worker
 
-            shift.appendChild(element)
-          })
-        })
+        shiftCell.appendChild(element)
       })
     }
 
@@ -223,7 +219,7 @@
       drawWorkerShifts: drawWorkerShifts,
 
       drawStoredShifts: function(){
-        shifts =  storage.json('shifts', [])
+        shifts = storage.json('shifts', [])
         drawShifts(shifts)
       },
 
