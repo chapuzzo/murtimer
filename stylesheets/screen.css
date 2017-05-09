@@ -229,44 +229,45 @@ body > .header input {
 .admin-view .table.timetable {
   width: 90%;
   height: auto;
+  min-width: 400px;
 }
-/* line 153, ../scss/_app.scss */
+/* line 154, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell {
   align-items: stretch;
 }
-/* line 155, ../scss/_app.scss */
+/* line 156, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell .cell {
   text-align: center;
   padding: 5px 0;
   flex: 0 0 auto;
 }
-/* line 159, ../scss/_app.scss */
+/* line 160, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell .cell:last-child {
   margin-bottom: auto;
 }
 
-/* line 169, ../scss/_app.scss */
+/* line 170, ../scss/_app.scss */
 .table .cell[data-priority='cant'] {
   background-color: tomato;
 }
-/* line 173, ../scss/_app.scss */
+/* line 174, ../scss/_app.scss */
 .table .cell[data-priority='dontwant'] {
   background-color: #FFA600;
 }
-/* line 177, ../scss/_app.scss */
+/* line 178, ../scss/_app.scss */
 .table .cell[data-priority='can'] {
   background-color: yellowgreen;
 }
-/* line 181, ../scss/_app.scss */
+/* line 182, ../scss/_app.scss */
 .table .cell[data-priority='want'] {
   background-color: greenyellow;
 }
-/* line 185, ../scss/_app.scss */
+/* line 186, ../scss/_app.scss */
 .table .cell[data-assigned='true'] {
   font-weight: bold;
   position: relative;
 }
-/* line 189, ../scss/_app.scss */
+/* line 190, ../scss/_app.scss */
 .table .cell[data-assigned='true']:before {
   content: '';
   position: absolute;
@@ -280,11 +281,11 @@ body > .header input {
   transform: rotate(-45deg);
 }
 
-/* line 205, ../scss/_app.scss */
+/* line 206, ../scss/_app.scss */
 .login-view select, .login-view input {
   font-size: 2rem;
 }
-/* line 209, ../scss/_app.scss */
+/* line 210, ../scss/_app.scss */
 .login-view .square {
   flex: 1 1 0;
   display: flex;
@@ -292,14 +293,14 @@ body > .header input {
   justify-content: center;
   max-height: 30%;
 }
-/* line 216, ../scss/_app.scss */
+/* line 217, ../scss/_app.scss */
 .login-view .square .row {
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-/* line 221, ../scss/_app.scss */
+/* line 222, ../scss/_app.scss */
 .login-view .square .row input {
   flex: 1 1 0;
   margin: 10px;
@@ -311,7 +312,7 @@ body > .header input {
   cursor: pointer;
 }
 
-/* line 235, ../scss/_app.scss */
+/* line 236, ../scss/_app.scss */
 body > .header {
   font-size: 1.5rem;
   text-align: center;
