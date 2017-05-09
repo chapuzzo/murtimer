@@ -114,6 +114,9 @@
           saveButton.remove()
         },
         bindEvents: function(app){
+          var prioritiesContainer = document.querySelector('.priorities')
+          prioritiesContainer.style.display = 'none'
+
           app.drawWorkerSelections()
           app.drawWorkerShifts()
         }
