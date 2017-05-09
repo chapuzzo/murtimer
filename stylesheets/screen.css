@@ -160,22 +160,22 @@ body > .header input {
 }
 /* line 81, ../scss/_app.scss */
 .table .caption {
-  flex: 1 1 0;
+  flex: 0 0 auto;
 }
 /* line 86, ../scss/_app.scss */
 .table .header, .table .body {
-  flex: 1 1 0;
+  flex: 1 0 auto;
 }
 /* line 91, ../scss/_app.scss */
 .table .row {
-  flex: 1 1 0;
+  flex: 1 0 auto;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
 }
 /* line 97, ../scss/_app.scss */
 .table .row .cell, .table .row .th {
-  flex: 1 1 0;
+  flex: 1 0 0;
 }
 /* line 100, ../scss/_app.scss */
 .table .row .cell.full-width, .table .row .th.full-width {
@@ -188,88 +188,85 @@ body > .header input {
 
 /* line 111, ../scss/_app.scss */
 .table.priorities {
+  flex: 0 0 auto;
   height: 15%;
 }
-/* line 114, ../scss/_app.scss */
-.table.priorities .body {
-  flex: 4 4 0;
-}
-/* line 117, ../scss/_app.scss */
+/* line 116, ../scss/_app.scss */
 .table.priorities .body .cell {
   justify-content: space-around;
 }
-/* line 119, ../scss/_app.scss */
+/* line 118, ../scss/_app.scss */
 .table.priorities .body .cell.selected {
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
 }
 
-/* line 126, ../scss/_app.scss */
+/* line 125, ../scss/_app.scss */
 .table.timetable {
   height: 40%;
 }
-/* line 129, ../scss/_app.scss */
-.table.timetable .body {
-  flex: 2 2 0;
+/* line 128, ../scss/_app.scss */
+.table.timetable .header {
+  flex: 1 0 30%;
 }
-/* line 133, ../scss/_app.scss */
+/* line 132, ../scss/_app.scss */
+.table.timetable .body {
+  flex: 1 0 60%;
+}
+/* line 136, ../scss/_app.scss */
 .table.timetable .table, .table.timetable .th, .table.timetable .cell {
   border: 1px black solid;
 }
-/* line 137, ../scss/_app.scss */
+/* line 140, ../scss/_app.scss */
 .table.timetable .cell {
   border: 1px grey solid;
 }
 
-/* line 142, ../scss/_app.scss */
+/* line 145, ../scss/_app.scss */
 .admin-view {
   justify-content: flex-start;
 }
-/* line 145, ../scss/_app.scss */
-.admin-view .header {
-  height: 10%;
-}
-/* line 149, ../scss/_app.scss */
+/* line 148, ../scss/_app.scss */
 .admin-view .table.timetable {
   width: 90%;
   height: auto;
 }
-/* line 154, ../scss/_app.scss */
+/* line 153, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell {
   align-items: stretch;
 }
-/* line 156, ../scss/_app.scss */
+/* line 155, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell .cell {
   text-align: center;
   padding: 5px 0;
-  flex: 0 0 0;
+  flex: 0 0 auto;
 }
-/* line 160, ../scss/_app.scss */
+/* line 159, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell .cell:last-child {
   margin-bottom: auto;
 }
 
-/* line 170, ../scss/_app.scss */
+/* line 169, ../scss/_app.scss */
 .table .cell[data-priority='cant'] {
   background-color: tomato;
 }
-/* line 174, ../scss/_app.scss */
+/* line 173, ../scss/_app.scss */
 .table .cell[data-priority='dontwant'] {
   background-color: #FFA600;
 }
-/* line 178, ../scss/_app.scss */
+/* line 177, ../scss/_app.scss */
 .table .cell[data-priority='can'] {
   background-color: yellowgreen;
 }
-/* line 182, ../scss/_app.scss */
+/* line 181, ../scss/_app.scss */
 .table .cell[data-priority='want'] {
   background-color: greenyellow;
 }
-/* line 186, ../scss/_app.scss */
+/* line 185, ../scss/_app.scss */
 .table .cell[data-assigned='true'] {
   font-weight: bold;
   position: relative;
 }
-/* line 190, ../scss/_app.scss */
+/* line 189, ../scss/_app.scss */
 .table .cell[data-assigned='true']:before {
   content: '';
   position: absolute;
@@ -283,24 +280,26 @@ body > .header input {
   transform: rotate(-45deg);
 }
 
-/* line 206, ../scss/_app.scss */
+/* line 205, ../scss/_app.scss */
 .login-view select, .login-view input {
   font-size: 2rem;
 }
-/* line 210, ../scss/_app.scss */
+/* line 209, ../scss/_app.scss */
 .login-view .square {
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  max-height: 30%;
 }
-/* line 215, ../scss/_app.scss */
+/* line 216, ../scss/_app.scss */
 .login-view .square .row {
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-/* line 220, ../scss/_app.scss */
+/* line 221, ../scss/_app.scss */
 .login-view .square .row input {
   flex: 1 1 0;
   margin: 10px;
@@ -312,7 +311,7 @@ body > .header input {
   cursor: pointer;
 }
 
-/* line 234, ../scss/_app.scss */
+/* line 235, ../scss/_app.scss */
 body > .header {
   font-size: 1.5rem;
   text-align: center;
