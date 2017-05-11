@@ -136,9 +136,11 @@ body > .header input {
   flex-flow: column;
   align-items: center;
   justify-content: space-around;
+  min-height: 300px;
+  min-width: 300px;
 }
 
-/* line 63, ../scss/_app.scss */
+/* line 66, ../scss/_app.scss */
 .table .caption, .table .row .cell, .table .row .th {
   display: flex;
   align-items: center;
@@ -146,128 +148,125 @@ body > .header input {
   flex-flow: column;
 }
 
-/* line 70, ../scss/_app.scss */
+/* line 73, ../scss/_app.scss */
 .table, .table .header, .table .body {
   display: flex;
   flex-flow: column;
   justify-content: space-between;
 }
 
-/* line 76, ../scss/_app.scss */
+/* line 79, ../scss/_app.scss */
 .table {
   width: 90%;
   margin: auto;
 }
-/* line 81, ../scss/_app.scss */
+/* line 84, ../scss/_app.scss */
 .table .caption {
   flex: 0 0 auto;
 }
-/* line 86, ../scss/_app.scss */
+/* line 89, ../scss/_app.scss */
 .table .header, .table .body {
   flex: 1 0 auto;
 }
-/* line 91, ../scss/_app.scss */
+/* line 94, ../scss/_app.scss */
 .table .row {
   flex: 1 0 auto;
   display: flex;
   flex-flow: row;
   justify-content: space-between;
 }
-/* line 97, ../scss/_app.scss */
+/* line 100, ../scss/_app.scss */
 .table .row .cell, .table .row .th {
   flex: 1 0 0;
 }
-/* line 100, ../scss/_app.scss */
+/* line 104, ../scss/_app.scss */
 .table .row .cell.full-width, .table .row .th.full-width {
   width: 100%;
 }
-/* line 105, ../scss/_app.scss */
+/* line 109, ../scss/_app.scss */
 .table .row .cell {
   cursor: pointer;
 }
 
-/* line 111, ../scss/_app.scss */
+/* line 115, ../scss/_app.scss */
 .table.priorities {
   flex: 0 0 auto;
-  height: 15%;
 }
-/* line 116, ../scss/_app.scss */
+/* line 119, ../scss/_app.scss */
 .table.priorities .body .cell {
   justify-content: space-around;
 }
-/* line 118, ../scss/_app.scss */
+/* line 121, ../scss/_app.scss */
 .table.priorities .body .cell.selected {
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3) inset;
 }
 
-/* line 125, ../scss/_app.scss */
-.table.timetable {
-  height: 40%;
-}
-/* line 128, ../scss/_app.scss */
+/* line 129, ../scss/_app.scss */
 .table.timetable .header {
-  flex: 1 0 30%;
+  flex: 1 0 auto;
 }
-/* line 132, ../scss/_app.scss */
+/* line 133, ../scss/_app.scss */
 .table.timetable .body {
-  flex: 1 0 60%;
+  flex: 6 0 auto;
 }
-/* line 136, ../scss/_app.scss */
+/* line 137, ../scss/_app.scss */
 .table.timetable .table, .table.timetable .th, .table.timetable .cell {
   border: 1px black solid;
 }
-/* line 140, ../scss/_app.scss */
+/* line 141, ../scss/_app.scss */
 .table.timetable .cell {
   border: 1px grey solid;
+  min-height: 50px;
 }
 
-/* line 145, ../scss/_app.scss */
+/* line 147, ../scss/_app.scss */
 .admin-view {
   justify-content: flex-start;
 }
-/* line 148, ../scss/_app.scss */
+/* line 150, ../scss/_app.scss */
 .admin-view .table.timetable {
   width: 90%;
   height: auto;
   min-width: 400px;
 }
-/* line 154, ../scss/_app.scss */
+/* line 156, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell {
   align-items: stretch;
 }
-/* line 156, ../scss/_app.scss */
+/* line 158, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell .cell {
   text-align: center;
   padding: 5px 0;
   flex: 0 0 auto;
+  min-height: 30px;
 }
-/* line 160, ../scss/_app.scss */
+/* line 163, ../scss/_app.scss */
 .admin-view .table.timetable .body .cell .cell:last-child {
   margin-bottom: auto;
 }
 
-/* line 170, ../scss/_app.scss */
+/* line 173, ../scss/_app.scss */
 .table .cell[data-priority='cant'] {
   background-color: tomato;
 }
-/* line 174, ../scss/_app.scss */
+/* line 177, ../scss/_app.scss */
 .table .cell[data-priority='dontwant'] {
   background-color: #FFA600;
 }
-/* line 178, ../scss/_app.scss */
+/* line 181, ../scss/_app.scss */
 .table .cell[data-priority='can'] {
   background-color: yellowgreen;
 }
-/* line 182, ../scss/_app.scss */
+/* line 185, ../scss/_app.scss */
 .table .cell[data-priority='want'] {
   background-color: greenyellow;
 }
-/* line 186, ../scss/_app.scss */
+/* line 189, ../scss/_app.scss */
 .table .cell[data-assigned='true'] {
   font-weight: bold;
   position: relative;
 }
-/* line 190, ../scss/_app.scss */
+/* line 193, ../scss/_app.scss */
 .table .cell[data-assigned='true']:before {
   content: '';
   position: absolute;
@@ -281,26 +280,26 @@ body > .header input {
   transform: rotate(-45deg);
 }
 
-/* line 206, ../scss/_app.scss */
+/* line 209, ../scss/_app.scss */
 .login-view select, .login-view input {
   font-size: 2rem;
 }
-/* line 210, ../scss/_app.scss */
+/* line 213, ../scss/_app.scss */
 .login-view .square {
   flex: 1 1 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  max-height: 30%;
+  max-height: 150px;
 }
-/* line 217, ../scss/_app.scss */
+/* line 220, ../scss/_app.scss */
 .login-view .square .row {
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-/* line 222, ../scss/_app.scss */
+/* line 225, ../scss/_app.scss */
 .login-view .square .row input {
   flex: 1 1 0;
   margin: 10px;
@@ -312,7 +311,7 @@ body > .header input {
   cursor: pointer;
 }
 
-/* line 236, ../scss/_app.scss */
+/* line 239, ../scss/_app.scss */
 body > .header {
   font-size: 1.5rem;
   text-align: center;

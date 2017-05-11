@@ -58,6 +58,9 @@ body > .header {
   flex-flow: column;
   align-items: center;
   justify-content: space-around;
+
+  min-height: 300px;
+  min-width: 300px;
 }
 
 %centered_content {
@@ -97,6 +100,7 @@ body > .header {
     .cell, .th {
       @extend %centered_content;
       flex: 1 0 0;
+
       &.full-width {
         width: 100%
       }
@@ -110,7 +114,6 @@ body > .header {
 
 .table.priorities {
   flex: 0 0 auto;
-  height: 15%;
 
   .body {
     .cell {
@@ -123,14 +126,12 @@ body > .header {
 }
 
 .table.timetable {
-  height: 40%;
-
   .header {
-    flex: 1 0 30%;
+    flex: 1 0 auto;
   }
 
   .body {
-    flex: 1 0 60%;
+    flex: 6 0 auto;
   }
 
   .table, .th, .cell {
@@ -139,6 +140,7 @@ body > .header {
 
   .cell {
     border: 1px grey solid;
+    min-height: 50px;
   }
 }
 
@@ -157,6 +159,7 @@ body > .header {
           text-align: center;
           padding: 5px 0;
           flex: 0 0 auto;
+          min-height: 30px;
           &:last-child{
             margin-bottom: auto;
           }
@@ -212,7 +215,7 @@ body > .header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-height: 30%;
+    max-height: 150px;
 
     .row {
       flex: 1 1 0;
