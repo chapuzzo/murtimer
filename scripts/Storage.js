@@ -30,14 +30,14 @@ var Storage = function(store){
       return fetchedValue
     },
 
-    json: function(key, defaultValue){
+    json: function(key, defaultValue, callback){
       var fetchedValue = store.getItem(secureKey(key))
 
       if (_.isNil(fetchedValue))
-        return defaultValue
+        return callback(defaultValue)
 
       try {
-        return JSON.parse(fetchedValue)
+        return callback(JSON.parse(fetchedValue))
       }
       catch(SyntaxError) {
         console.error('fetched value is not a valid JSON')

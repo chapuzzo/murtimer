@@ -186,8 +186,9 @@
           var timetableButton = document.querySelector('.timetable')
 
           loginButton.addEventListener('click', function(){
-            app.login(userSelector.value)
-            _load('user')
+            app.login(userSelector.value, function(){
+              _load('user')
+            })
           })
 
           planButton.addEventListener('click', function(){
@@ -195,8 +196,9 @@
           })
 
           checkButton.addEventListener('click', function(){
-            app.login(userSelector.value)
-            _load('check')
+            app.login(userSelector.value, function(){
+              _load('check')
+            })
           })
 
           timetableButton.addEventListener('click', function(){

@@ -62,14 +62,14 @@
     }
 
     var drawWorkerShifts = function(){
-      var shifts = storage.json('shifts', [])
+      storage.json('shifts', [], function(shifts){
+        _.forEach(shifts, function(shift){
+          if (shift.worker != currentUser )
+            return
 
-      _.forEach(shifts, function(shift){
-        if (shift.worker != currentUser )
-          return
-
-        var currentSlotQuery = '.cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"]'
-        document.querySelector(currentSlotQuery).dataset.assigned = true
+          var currentSlotQuery = '.cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"]'
+          document.querySelector(currentSlotQuery).dataset.assigned = true
+        })
       })
     }
 
@@ -94,7 +94,7 @@
     var drawShiftAssigner = function(){
       var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
       var duties = ['morning', 'evening']
-      var workers = ['Anna', 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse']
+      var workers = [/*'Anna',*/ 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse', 'Robert']
 
       var createUserSelector = function(userName, day, duty){
         var element = document.createElement('div')
@@ -121,21 +121,18 @@
         })
       })
 
-      var priorities = workersSelections()
-      _.forEach(priorities, function(priorities, worker){
-        _.forEach(priorities, function(selections, priority){
-          _.forEach(selections, function(selection){
-            var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
-            var workerDutySelection = document.querySelector(workerDutySelector)
+      storage.json('selections', {}, function(priorities){
+        _.forEach(priorities, function(priorities, worker){
+          _.forEach(priorities, function(selections, priority){
+            _.forEach(selections, function(selection){
+              var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
+              var workerDutySelection = document.querySelector(workerDutySelector)
 
-            workerDutySelection.dataset.priority = priority
+              workerDutySelection.dataset.priority = priority
+            })
           })
         })
       })
-    }
-
-    var workersSelections = function(){
-      return storage.json('selections', {})
     }
 
     var assignShift = function(worker, day, duty){
@@ -150,23 +147,27 @@
     }
 
     var drawTimetable = function(){
-      var shifts = storage.json('shifts', [])
-      _.forEach(shifts, function(shift){
-        var shiftSelector = '.cell[data-duty="' + shift.duty + '"][data-day="' + shift.day + '"]'
-        var shiftCell = document.querySelector(shiftSelector)
+      storage.json('shifts', [], function(shifts){
+        _.forEach(shifts, function(shift){
+          var shiftSelector = '.cell[data-duty="' + shift.duty + '"][data-day="' + shift.day + '"]'
+          var shiftCell = document.querySelector(shiftSelector)
 
-        var element = document.createElement('div')
-        element.classList.add('cell')
-        element.innerHTML = shift.worker
+          var element = document.createElement('div')
+          element.classList.add('cell')
+          element.innerHTML = shift.worker
 
-        shiftCell.appendChild(element)
+          shiftCell.appendChild(element)
+        })
       })
     }
 
     return {
-      login: function(user){
+      login: function(user, callback){
         currentUser = user
-        userSelections = storage.json('selections', {})[user] || {}
+        storage.json('selections', {}, function(selections){
+          userSelections = selections[user] || {}
+          callback()
+        })
       },
 
       logout: function(){
@@ -209,18 +210,20 @@
       },
 
       saveWorkerSelections: function(){
-        var selections = storage.json('selections', {})
+        storage.json('selections', {}, function(selections){
+          selections[currentUser] = userSelections
 
-        selections[currentUser] = userSelections
-
-        storage.save('selections', selections)
+          storage.save('selections', selections)
+        })
       },
 
       drawWorkerShifts: drawWorkerShifts,
 
       drawStoredShifts: function(){
-        shifts = storage.json('shifts', [])
-        drawShifts(shifts)
+        storage.json('shifts', [], function(retrievedShifts){
+          shifts = retrievedShifts
+          drawShifts(shifts)
+        })
       },
 
       saveShifts: function(){
