@@ -293,13 +293,23 @@ body > .header input {
   max-height: 150px;
 }
 /* line 220, ../scss/_app.scss */
+.login-view .square.user {
+  justify-content: space-around;
+}
+/* line 223, ../scss/_app.scss */
+.login-view .square.user input, .login-view .square.user select {
+  text-align: center;
+  max-width: 50%;
+  margin: auto;
+}
+/* line 230, ../scss/_app.scss */
 .login-view .square .row {
   flex: 1 1 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-/* line 225, ../scss/_app.scss */
+/* line 235, ../scss/_app.scss */
 .login-view .square .row input {
   flex: 1 1 0;
   margin: 10px;
@@ -311,7 +321,7 @@ body > .header input {
   cursor: pointer;
 }
 
-/* line 239, ../scss/_app.scss */
+/* line 249, ../scss/_app.scss */
 body > .header {
   font-size: 1.5rem;
   text-align: center;

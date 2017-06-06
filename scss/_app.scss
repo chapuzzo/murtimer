@@ -217,6 +217,16 @@ body > .header {
     justify-content: center;
     max-height: 150px;
 
+    &.user {
+      justify-content: space-around;
+
+      input, select {
+        text-align: center;
+        max-width: 50%;
+        margin: auto;
+      }
+    }
+
     .row {
       flex: 1 1 0;
       display: flex;
