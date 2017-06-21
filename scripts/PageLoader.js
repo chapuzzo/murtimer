@@ -58,6 +58,11 @@
 
           var nameElement = document.querySelector('.header span.name')
           nameElement.innerHTML = app.currentUser()
+
+          console.log(app.currentUser())
+          setTimeout(function() {
+            console.log(app.currentUser())
+          }, 1000);
         },
         bindEvents: function(app){
           var cellElements = document.querySelectorAll('.timetable .cell')
@@ -179,7 +184,7 @@
               headerContent.remove()
             })
 
-          var userSelector = document.querySelector('.user')
+          var userSelector = document.querySelector('.name')
           var loginButton = document.querySelector('.login')
           var planButton = document.querySelector('.plan')
           var checkButton = document.querySelector('.check')

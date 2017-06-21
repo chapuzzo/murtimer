@@ -14,7 +14,8 @@ var Storage = function(store){
 
   return {
     save: function(key, data){
-      store.setItem(secureKey(key), normalize(data))
+      // store.setItem(secureKey(key), normalize(data))
+      firebase.database().ref(secureKey(key)).set(data)
     },
 
     remove: function(key){
@@ -22,26 +23,39 @@ var Storage = function(store){
     },
 
     retrieve: function(key, defaultValue){
-      var fetchedValue = store.getItem(secureKey(key))
+      firebase.database().ref(secureKey(key)).once('value', function(snapshot){
+        var fetchedValue = snapshot.val()
+        console.log(_.isNil(fetchedValue))
 
-      if (_.isNil(fetchedValue))
-        return defaultValue
+        if (_.isNil(fetchedValue))
+          return defaultValue
 
-      return fetchedValue
+        return fetchedValue
+      })
     },
 
     json: function(key, defaultValue, callback){
-      var fetchedValue = store.getItem(secureKey(key))
+      // var fetchedValue = store.getItem(secureKey(key))
+      firebase.database().ref(secureKey(key)).once('value', function(snapshot){
+        var fetchedValue = snapshot.val()
 
-      if (_.isNil(fetchedValue))
-        return callback(defaultValue)
+        console.log('key', key)
+        console.log(fetchedValue)
+        console.log(_.isNil(fetchedValue))
 
-      try {
-        return callback(JSON.parse(fetchedValue))
-      }
-      catch(SyntaxError) {
-        console.error('fetched value is not a valid JSON')
-      }
+        if (_.isNil(fetchedValue))
+          return callback(defaultValue)
+
+        callback(fetchedValue)
+
+
+        // try {
+        //   return callback(JSON.parse(fetchedValue))
+        // }
+        // catch(SyntaxError) {
+        //   console.error('fetched value is not a valid JSON')
+        // }
+      })
     }
   }
 }

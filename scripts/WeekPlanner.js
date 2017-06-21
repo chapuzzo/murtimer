@@ -163,6 +163,7 @@
 
     return {
       login: function(user, callback){
+        console.log(arguments)
         currentUser = user
         storage.json('selections', {}, function(selections){
           userSelections = selections[user] || {}
@@ -221,6 +222,7 @@
 
       drawStoredShifts: function(){
         storage.json('shifts', [], function(retrievedShifts){
+          console.log(retrievedShifts)
           shifts = retrievedShifts
           drawShifts(shifts)
         })
