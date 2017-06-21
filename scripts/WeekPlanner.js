@@ -94,7 +94,7 @@
     var drawShiftAssigner = function(){
       var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
       var duties = ['morning', 'evening']
-      var workers = [/*'Anna',*/ 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Montse', 'Robert']
+      var workers = [/*'Anna', 'Montse', 'Robert'*/ 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Nicolle', 'Maria', 'Emma', 'Joan']
 
       var createUserSelector = function(userName, day, duty){
         var element = document.createElement('div')
