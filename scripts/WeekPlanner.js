@@ -1,6 +1,6 @@
-'use strict'
 
 !(function(ns){
+'use strict'
 
   ns.WeekPlanner = function(priorities, initialPriority, storage){
     var currentPriority = initialPriority
@@ -8,156 +8,192 @@
     var shifts = []
     var currentUser
 
-    var buildSelection = function(day, duty){
-      return {
-        day: day,
-        duty: duty
-      }
-    }
+    var workerSelections = {
+      build: function(day, duty){
+        return {
+          day: day,
+          duty: duty
+        }
+      },
 
-    var buildShift = function(worker, day, duty){
-      return {
-        worker: worker,
-        day: day,
-        duty: duty
-      }
-    }
-
-    var drawPriorities = function(selections){
-      var priorityElements = document.querySelectorAll('.priorities .cell')
-      _.forEach(priorityElements, function(priorityElement){
-        priorityElement.classList.remove('selected')
-      })
-
-      var currentPriorityQuery = '.priorities [data-priority="' + currentPriority +'"]'
-      var currentPriorityElement = document.querySelector(currentPriorityQuery)
-      currentPriorityElement.classList.add('selected')
-
-
-      _.forEach(priorities, function(max, priority){
-        var currentPriorityQuery = '.priorities [data-priority="' + priority +'"] .count'
-        var element = document.querySelector(currentPriorityQuery)
-        element.innerHTML = max - (selections[priority] || []).length
-      })
-    }
-
-    var clearSelections = function(){
-      var cellElements = document.querySelectorAll('.timetable .cell')
-      _.forEach(cellElements, function(cellElement){
-        cellElement.dataset.priority = ''
-      })
-    }
-
-    var drawSelections = function(selections){
-      clearSelections()
-
-      _.forEach(selections, function(selections, priority){
-        _.forEach(selections, function(selection){
-          var currentSlotQuery = '.cell[data-day="' + selection.day + '"][data-duty="' + selection.duty + '"]'
-          document.querySelector(currentSlotQuery).dataset.priority = priority
+      clear: function(){
+        var cellElements = document.querySelectorAll('.timetable .cell')
+        _.forEach(cellElements, function(cellElement){
+          cellElement.dataset.priority = ''
         })
-      })
+      },
 
-      drawPriorities(selections)
+      draw: function(selections){
+        workerSelections.clear()
+
+        _.forEach(selections, function(selections, priority){
+          _.forEach(selections, function(selection){
+            var currentSlotQuery = '.cell[data-day="' + selection.day + '"][data-duty="' + selection.duty + '"]'
+            document.querySelector(currentSlotQuery).dataset.priority = priority
+          })
+        })
+
+        prioritiesSelector.draw(selections)
+      },
+
+      toggle: function(day, duty){
+        userSelections[currentPriority] = userSelections[currentPriority] || []
+
+        var builtSelection = workerSelections.build(day, duty)
+
+        if (_.find(userSelections[currentPriority], builtSelection)){
+          clearSelection(builtSelection)
+        }
+        else {
+          clearSelection(builtSelection)
+          userSelections[currentPriority].push(builtSelection)
+        }
+
+        if (userSelections[currentPriority].length > priorities[currentPriority])
+          userSelections[currentPriority].shift()
+
+        workerSelections.draw(userSelections)
+      }
     }
 
-    var drawWorkerShifts = function(){
-      storage.json('shifts', [], function(shifts){
+    var prioritiesSelector = {
+      draw: function(selections){
+        var priorityElements = document.querySelectorAll('.priorities .cell')
+        _.forEach(priorityElements, function(priorityElement){
+          priorityElement.classList.remove('selected')
+        })
+
+        var currentPriorityQuery = '.priorities [data-priority="' + currentPriority +'"]'
+        var currentPriorityElement = document.querySelector(currentPriorityQuery)
+        currentPriorityElement.classList.add('selected')
+
+        _.forEach(priorities, function(max, priority){
+          var currentPriorityQuery = '.priorities [data-priority="' + priority +'"] .count'
+          var element = document.querySelector(currentPriorityQuery)
+          element.innerHTML = max - (selections[priority] || []).length
+        })
+      },
+
+      select: function(name){
+        if (!_.has(priorities, name))
+          return
+
+        currentPriority = name
+        prioritiesSelector.draw(userSelections)
+      }
+    }
+
+    var shiftAssigner = {
+      build: function(worker, day, duty){
+        return {
+          worker: worker,
+          day: day,
+          duty: duty
+        }
+      },
+
+      draw: function(shifts){
+        var workerCells = document.querySelectorAll('[data-worker]')
+        _.forEach(workerCells, function(workerCell){
+          workerCell.dataset.assigned = false
+        })
+
         _.forEach(shifts, function(shift){
-          if (shift.worker != currentUser )
-            return
-
-          var currentSlotQuery = '.cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"]'
-          document.querySelector(currentSlotQuery).dataset.assigned = true
+          var currentShiftQuery = '.cell .cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"][data-worker="' + shift.worker + '"]'
+          document.querySelector(currentShiftQuery).dataset.assigned = true
         })
-      })
+      },
+
+      drawWorkers: function(){
+        var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+        var duties = ['morning', 'evening']
+        var workers = [/*'Anna', 'Montse', 'Robert'*/ 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Nicolle', 'Maria', 'Emma', 'Joan']
+
+        var createUserSelector = function(userName, day, duty){
+          var element = document.createElement('div')
+          element.classList.add('cell')
+          element.dataset.worker = userName
+          element.dataset.day = day
+          element.dataset.duty = duty
+          element.innerHTML = userName
+
+          element.addEventListener('click', function(event){
+            shiftAssigner.assign(userName, day, duty)
+          })
+
+          return element
+        }
+
+        _.forEach(weekDays, function(weekDay){
+          _.forEach(duties, function(duty){
+            var parentSelector = '[data-duty="' + duty + '"][data-day="' + weekDay + '"]'
+            var parent = document.querySelector(parentSelector)
+            _.forEach(workers,function(worker){
+              parent.appendChild(createUserSelector(worker, weekDay, duty))
+            })
+          })
+        })
+
+        storage.json('selections', {}, function(priorities){
+          _.forEach(priorities, function(priorities, worker){
+            _.forEach(priorities, function(selections, priority){
+              _.forEach(selections, function(selection){
+                var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
+                var workerDutySelection = document.querySelector(workerDutySelector)
+
+                workerDutySelection.dataset.priority = priority
+              })
+            })
+          })
+        })
+      },
+
+      assign: function(worker, day, duty){
+        var shiftToAdd = shiftAssigner.build(worker, day, duty)
+
+        if (_.find(shifts, shiftToAdd))
+          _.remove(shifts, shiftToAdd)
+        else
+          shifts.push(shiftToAdd)
+
+        shiftAssigner.draw(shifts)
+      },
+
+      worker: {
+        draw: function(){
+          storage.json('shifts', [], function(shifts){
+            _.forEach(shifts, function(shift){
+              if (shift.worker != currentUser )
+                return
+
+              var currentSlotQuery = '.cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"]'
+              document.querySelector(currentSlotQuery).dataset.assigned = true
+            })
+          })
+        }
+      }
     }
 
-    var drawShifts = function(shifts){
-      var workerCells = document.querySelectorAll('[data-worker]')
-      _.forEach(workerCells, function(workerCell){
-        workerCell.dataset.assigned = false
-      })
+    var timetable = {
+      draw: function(){
+        storage.json('shifts', [], function(shifts){
+          _.forEach(shifts, function(shift){
+            var shiftSelector = '.cell[data-duty="' + shift.duty + '"][data-day="' + shift.day + '"]'
+            var shiftCell = document.querySelector(shiftSelector)
 
-      _.forEach(shifts, function(shift){
-        var currentShiftQuery = '.cell .cell[data-day="' + shift.day + '"][data-duty="' + shift.duty + '"][data-worker="' + shift.worker + '"]'
-        document.querySelector(currentShiftQuery).dataset.assigned = true
-      })
+            var element = document.createElement('div')
+            element.classList.add('cell')
+            element.innerHTML = shift.worker
+
+            shiftCell.appendChild(element)
+          })
+        })
+      }
     }
 
     var clearSelection =  function(builtSelection){
       _.forEach(userSelections, function(eachPrioritySelections){
         _.remove(eachPrioritySelections, builtSelection)
-      })
-    }
-
-    var drawShiftAssigner = function(){
-      var weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
-      var duties = ['morning', 'evening']
-      var workers = [/*'Anna', 'Montse', 'Robert'*/ 'Ivan', 'Karen', 'Leti', 'Minerva', 'Sénia', 'Nicolle', 'Maria', 'Emma', 'Joan']
-
-      var createUserSelector = function(userName, day, duty){
-        var element = document.createElement('div')
-        element.classList.add('cell')
-        element.dataset.worker = userName
-        element.dataset.day = day
-        element.dataset.duty = duty
-        element.innerHTML = userName
-
-        element.addEventListener('click', function(event){
-          assignShift(userName, day, duty)
-        })
-
-        return element
-      }
-
-      _.forEach(weekDays, function(weekDay){
-        _.forEach(duties, function(duty){
-          var parentSelector = '[data-duty="' + duty + '"][data-day="' + weekDay + '"]'
-          var parent = document.querySelector(parentSelector)
-          _.forEach(workers,function(worker){
-            parent.appendChild(createUserSelector(worker, weekDay, duty))
-          })
-        })
-      })
-
-      storage.json('selections', {}, function(priorities){
-        _.forEach(priorities, function(priorities, worker){
-          _.forEach(priorities, function(selections, priority){
-            _.forEach(selections, function(selection){
-              var workerDutySelector = '.cell[data-duty="' + selection.duty + '"][data-day="' + selection.day + '"] [data-worker="' + worker + '"]'
-              var workerDutySelection = document.querySelector(workerDutySelector)
-
-              workerDutySelection.dataset.priority = priority
-            })
-          })
-        })
-      })
-    }
-
-    var assignShift = function(worker, day, duty){
-      var shiftToAdd = buildShift(worker, day, duty)
-
-      if (_.find(shifts, shiftToAdd))
-        _.remove(shifts, shiftToAdd)
-      else
-        shifts.push(shiftToAdd)
-
-      drawShifts(shifts)
-    }
-
-    var drawTimetable = function(){
-      storage.json('shifts', [], function(shifts){
-        _.forEach(shifts, function(shift){
-          var shiftSelector = '.cell[data-duty="' + shift.duty + '"][data-day="' + shift.day + '"]'
-          var shiftCell = document.querySelector(shiftSelector)
-
-          var element = document.createElement('div')
-          element.classList.add('cell')
-          element.innerHTML = shift.worker
-
-          shiftCell.appendChild(element)
-        })
       })
     }
 
@@ -180,35 +216,12 @@
       },
 
       drawWorkerSelections: function(){
-        drawSelections(userSelections)
+        workerSelections.draw(userSelections)
       },
 
-      selectWorkerPriority: function(name){
-        if (!_.has(priorities, name))
-          return
+      selectWorkerPriority: prioritiesSelector.select,
 
-        currentPriority = name
-        drawPriorities(userSelections)
-      },
-
-      toggleWorkerSelection: function(day, duty){
-        userSelections[currentPriority] = userSelections[currentPriority] || []
-
-        var builtSelection = buildSelection(day, duty)
-
-        if (_.find(userSelections[currentPriority], builtSelection)){
-          clearSelection(builtSelection)
-        }
-        else {
-          clearSelection(builtSelection)
-          userSelections[currentPriority].push(builtSelection)
-        }
-
-        if (userSelections[currentPriority].length > priorities[currentPriority])
-          userSelections[currentPriority].shift()
-
-        drawSelections(userSelections)
-      },
+      toggleWorkerSelection: workerSelections.toggle,
 
       saveWorkerSelections: function(){
         storage.json('selections', {}, function(selections){
@@ -218,13 +231,13 @@
         })
       },
 
-      drawWorkerShifts: drawWorkerShifts,
+      drawShiftAssigner: shiftAssigner.drawWorkers,
 
       drawStoredShifts: function(){
         storage.json('shifts', [], function(retrievedShifts){
           console.log(retrievedShifts)
           shifts = retrievedShifts
-          drawShifts(shifts)
+          shiftAssigner.draw(retrievedShifts)
         })
       },
 
@@ -232,9 +245,9 @@
         storage.save('shifts', shifts)
       },
 
-      drawShiftAssigner: drawShiftAssigner,
+      drawWorkerShifts: shiftAssigner.worker.draw,
 
-      drawTimetable: drawTimetable
+      drawTimetable: timetable.draw
     }
   }
 
